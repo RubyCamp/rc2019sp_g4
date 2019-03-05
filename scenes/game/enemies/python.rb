@@ -1,7 +1,7 @@
 require_relative '../enemy.rb'
-class Elephpant < Enemy
+class Python < Enemy
     def initialize
         super
-        @img = Image.load('images/elephpant.png')
+        @img = Image.load('images/python.png')
     end
 end
