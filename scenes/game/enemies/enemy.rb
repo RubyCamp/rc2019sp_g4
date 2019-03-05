@@ -25,8 +25,3 @@ class Enemy
         Window.draw(@x, @y, @img)
     end
 end
-
-class Elephpant < Enemy
-    def initialize
-    end
-end
