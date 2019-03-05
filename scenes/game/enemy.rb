@@ -1,7 +1,6 @@
 class Enemy
     attr_reader :x, :y, :img
     def initialize
-        @img = Image.load('images/default_square.png')
         @x = 0
         @y = 2
         @dir = 2
