@@ -13,7 +13,8 @@ require_relative 'lib/cp/cp_box'
 require_relative 'lib/cp/cp_static_box'
 
 require_relative 'scenes/game/player'
-require_relative 'scenes/game/enemy'
+require_relative 'scenes/game/enemies/elephpant.rb'
+require_relative 'scenes/game/enemies/enemy.rb'
 
 Window.width = 900
 Window.height = 650
