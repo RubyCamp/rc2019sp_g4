@@ -11,7 +11,6 @@ class CP::Shape::Poly
   attr_accessor :parent_obj
 end
 
-
 class CPBase
   def self.walls
     walls = []

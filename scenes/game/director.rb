@@ -12,10 +12,10 @@ module Game
 
       # エネミーオブジェクトの生成
       # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
-      dlang = Dlang.new(0, 0, 50, 50, 'images/dlang.png')
-      elephpant = Elephpant.new(50, 50, 20, 30, 'images/elephpant.png')
-      gopher = Gopher.new(100, 100, 10, 30, 'images/gopher.png')
-      python = Python.new(150, 150, 90, 70, 'images/python.png')
+      dlang = Dlang.new(-100, 200, 20, 1, 'images/dlang.png')
+      elephpant = Elephpant.new(800, 500, 20, 1, 'images/elephpant.png')
+      gopher = Gopher.new(-500, 500, 20, 1, 'images/gopher.png')
+      python = Python.new(-100, 500, 20, 1, 'images/python.png')
 
       enemies = []
       enemies << dlang
@@ -23,7 +23,6 @@ module Game
       enemies << gopher
       enemies << python
 
-      p enemies
       enemies.each do |enemy|
         @space.add(enemy)
       end
@@ -32,8 +31,6 @@ module Game
       enemies.map do |enemy|
         @objects << enemy
       end
-
-      p @objects
 
       # プレイヤーオブジェクトを物理演算空間に登録
       #@space.add(player)

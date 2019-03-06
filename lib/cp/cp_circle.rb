@@ -17,5 +17,4 @@ class CPCircle < CPBase
   def draw
     Window.draw(@body.p.x - @r, @body.p.y - @r, @image)
   end
-
 end
