@@ -38,7 +38,25 @@ module Game
       # プレイヤーオブジェクトを物理演算空間に登録
       #@space.add(player)
       # ゲーム世界に登場する全てのオブジェクトを格納する配列を定義
-      #@objects = [player]
+      @objects = [player]
+      @bg_img = Image.load('images/back_bg.png')
+      @space = CP::Space.new
+      @space.gravity = CP::Vec2.new(0, 150)
+
+
+      @walls = []
+      @walls << CPStaticBox.new(0, 600, 900, 620)
+      @walls << CPStaticBox.new(0, 620, 900, 640)
+      @walls << CPStaticBox.new(0, 640, 900, 650)
+
+      @walls << CPStaticBox.new(180, 480, 360, 500)
+      @walls << CPStaticBox.new(540, 480, 720, 500)
+      @walls << CPStaticBox.new(360, 200, 540, 220)
+
+      #@space.add(@current)
+      @walls.each do |wall|
+        @space.add(wall)
+      end
 
       # ゲーム世界に障害物となる静的BOXを追加
       block = CPStaticBox.new(200, 350, 600, 400)
@@ -78,6 +96,12 @@ module Game
     # end
 
     def play
+      Window.draw(0, 0, @bg_img)
+
+      @walls.each do |wall|
+        wall.draw
+      end
+      # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
       @objects.each do |obj|
         obj.move  # 1フレーム分の移動処理
         obj.draw  # 1フレーム分の描画処理
