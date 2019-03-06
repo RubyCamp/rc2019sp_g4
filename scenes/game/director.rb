@@ -2,6 +2,7 @@ module Game
   class Director
     def initialize
       @space = CP::Space.new
+
       @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
 
       @objects = []
@@ -67,16 +68,20 @@ module Game
         # 衝突個所の座標に絵を表示（1フレームで消える点に留意）
        # Window.draw(pos.x, pos.y, star_img)
       #end
+
+      @space.gravity = CP::Vec2.new(0, 500)
+      CPBase.generate_walls(@space)
+      image=Image.load("images/player_stay.png")
+      player = Player.new(400, 500, 25, 10, C_BLUE,image)
+      @space.add(player)
+      @objects = [player]
     end
 
-    # main.rb側のWindow.loop内で呼ばれるメソッド
     def play
-      # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
       @objects.each do |obj|
         obj.move  # 1フレーム分の移動処理
         obj.draw  # 1フレーム分の描画処理
       end
-      
       @space.step(1 / 60.0)
     end
   end
