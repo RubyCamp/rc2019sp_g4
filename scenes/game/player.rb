@@ -1,6 +1,4 @@
-# 操作対象となるプレイヤーキャラクタ
 class Player < CPCircle
-  # 衝突判定区分を設定
   COLLISION_TYPE = 1
 
   def initialize(x,y,r,mass,e = 0, u = 0)
@@ -20,8 +18,8 @@ class Player < CPCircle
     @current_image = @images[:left] if Input.key_push?(K_LEFT)
     @current_image = @images[:jump] if Input.key_push?(K_DOWN)
 
-    apply_force(30, 0) if Input.key_down?(K_RIGHT)
-    apply_force(-30, 0) if Input.key_down?(K_LEFT)
+    apply_force(50, 0) if Input.key_down?(K_RIGHT)
+    apply_force(-50, 0) if Input.key_down?(K_LEFT)
     apply_force(0, 100) if Input.key_down?(K_DOWN)
     if Input.key_push?(K_UP)
       apply_force(0, -750)
@@ -32,4 +30,5 @@ class Player < CPCircle
   def draw
     Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
   end
+
 end

@@ -27,7 +27,6 @@ module Game
         @space.add(enemy)
       end
 
-      #@opbjects = [enemies]
       enemies.map do |enemy|
         @objects << enemy
       end
@@ -35,7 +34,25 @@ module Game
       # プレイヤーオブジェクトを物理演算空間に登録
       #@space.add(player)
       # ゲーム世界に登場する全てのオブジェクトを格納する配列を定義
-      #@objects = [player]
+      # @objects = [player]
+      @bg_img = Image.load('images/back_bg.png')
+      @space = CP::Space.new
+      @space.gravity = CP::Vec2.new(0, 150)
+
+
+      @walls = []
+      @walls << CPStaticBox.new(0, 600, 900, 620)
+      @walls << CPStaticBox.new(0, 620, 900, 640)
+      @walls << CPStaticBox.new(0, 640, 900, 650)
+
+      @walls << CPStaticBox.new(180, 480, 360, 500)
+      @walls << CPStaticBox.new(540, 480, 720, 500)
+      @walls << CPStaticBox.new(360, 200, 540, 220)
+
+      #@space.add(@current)
+      @walls.each do |wall|
+        @space.add(wall)
+      end
 
       # ゲーム世界に障害物となる静的BOXを追加
       block = CPStaticBox.new(200, 350, 600, 400)
@@ -43,13 +60,7 @@ module Game
 
       @objects << block
 
-      # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
-      #4.times do
-        #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
-        #@space.add(e)
-        #@objects << e
-      #end
-
+   
       # プレイヤーオブジェクトと敵オブジェクトが衝突した際の振る舞いを定義する
       # 以下の定義にて、プレイヤーと敵が衝突した際に、自動的にブロックの内容が実行される。
       # ブロック引数の意味はそれぞれ以下の通り。
@@ -65,16 +76,20 @@ module Game
        # Window.draw(pos.x, pos.y, star_img)
       #end
 
-      @space.gravity = CP::Vec2.new(0, 500)
-
       CPBase.generate_walls(@space)
 
-      # player = Player.new(400, 500, 45, 1, C_BLUE)
-    #   @space.add(player)
-    #   @objects = [player]
-    # end
+       player = Player.new(400, 500, 45, 1)
+       @space.add(player)
+       @objects << player
+     end
 
     def play
+      Window.draw(0, 0, @bg_img)
+
+      @walls.each do |wall|
+        wall.draw
+      end
+      # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
       @objects.each do |obj|
         obj.move  # 1フレーム分の移動処理
         obj.draw  # 1フレーム分の描画処理
@@ -82,5 +97,4 @@ module Game
       @space.step(1 / 60.0)
     end
   end
-end
 end
