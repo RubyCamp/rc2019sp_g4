@@ -33,6 +33,7 @@ Window.loop do
   @space = CP::Space.new
   @space.gravity = CP::Vec2.new(0, 150)
 
+
   Window.draw(0, 0, @bg_img)
   @walls = CPBase.walls
   @walls << CPStaticBox.new(0, 600, 900, 620)
@@ -46,9 +47,14 @@ Window.loop do
   #@space.add(@current)
   @walls.each do |wall|
     @space.add(wall)
+  end======
+  
+  @walls.each do |wall|
+      wall.draw
   end
+  
 
   @space.step(1/60.0)
-    break if Input.key_push?(K_ESCAPE)
+   　break if Input.key_push?(K_ESCAPE)
     Scene.play
 end
