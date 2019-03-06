@@ -1,6 +1,14 @@
 module Game
   class Director
     def initialize
+      # スコア表示
+      @font = Font.new(24)
+      @score = 0
+      @highscore = 100
+      # タイマー表示
+      @limit_time = 3 * 60  # 分*60
+      @start_time = Time.now
+
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
 
@@ -103,6 +111,18 @@ module Game
         obj.move  # 1フレーム分の移動処理
         obj.draw  # 1フレーム分の描画処理
       end
+      # スコア表示
+      Window.draw_font(650,10,"★HIGHSCORE★: #{@highscore}", @font)
+      Window.draw_font(650, 40, "SCORE: #{@score}",@font)
+
+      # タイマー表示
+      @now_time = Time.now
+    	@diff_time = @now_time - @start_time
+    	countdown = (@limit_time - @diff_time).to_i
+    	min = countdown / 60
+    	sec = countdown % 60
+    	Window.drawFont(10, 10, "#{min}:#{sec}", @font)
+
       @space.step(1 / 60.0)
     end
   end
