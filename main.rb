@@ -47,12 +47,12 @@ Window.loop do
   #@space.add(@current)
   @walls.each do |wall|
     @space.add(wall)
-  end======
-  
+  end
+
   @walls.each do |wall|
       wall.draw
   end
-  
+
 
   @space.step(1/60.0)
    　break if Input.key_push?(K_ESCAPE)

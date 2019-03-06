@@ -23,7 +23,7 @@ class Player < CPCircle
 
     @current_image = @images[:right]
     super(x,y,r,mass,@current_image,e,u)
-  end
+  end3
 
   def move
     @current_image = @images[:right] if Input.key_push?(K_RIGHT)
@@ -43,4 +43,5 @@ class Player < CPCircle
     Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
   end
 
+end
 end
