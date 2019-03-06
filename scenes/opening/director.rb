@@ -1,7 +1,6 @@
 module Opening
   class Director
     def initialize
-     
     end
 
     def play
