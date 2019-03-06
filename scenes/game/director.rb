@@ -39,10 +39,7 @@ module Game
         @objects << enemy
       end
 
-      # プレイヤーオブジェクトを物理演算空間に登録
-      #@space.add(player)
-      # ゲーム世界に登場する全てのオブジェクトを格納する配列を定義
-      # @objects = [player]
+      # ゲーム世界に障害物となる静的BOXを追加
       @bg_img = Image.load('images/back_bg.png')
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 150)
@@ -62,13 +59,8 @@ module Game
         @space.add(wall)
       end
 
-      # ゲーム世界に障害物となる静的BOXを追加
-      block = CPStaticBox.new(200, 350, 600, 400)
-      @space.add(block)
 
-      @objects << block
 
-   
       # プレイヤーオブジェクトと敵オブジェクトが衝突した際の振る舞いを定義する
       # 以下の定義にて、プレイヤーと敵が衝突した際に、自動的にブロックの内容が実行される。
       # ブロック引数の意味はそれぞれ以下の通り。
