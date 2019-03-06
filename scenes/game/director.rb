@@ -1,6 +1,14 @@
 module Game
   class Director
     def initialize
+      # スコア表示
+      @font = Font.new(24)
+      @score = 0
+      @highscore = 100
+      # タイマー表示
+      @limit_time = 3 * 60  # 分*60
+      @start_time = Time.now
+
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
 
@@ -12,10 +20,12 @@ module Game
 
       # エネミーオブジェクトの生成
       # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
-      dlang = Dlang.new(0, 0, 50, 50, 'images/dlang.png')
-      elephpant = Elephpant.new(50, 50, 20, 30, 'images/elephpant.png')
-      gopher = Gopher.new(100, 100, 10, 30, 'images/gopher.png')
-      python = Python.new(150, 150, 90, 70, 'images/python.png')
+      dlang = Dlang.new(-100, 200, 20, 1, 'images/dlang.png')
+
+      elephpant = Elephpant.new(400, 500, 20, 1, 'images/elephpant.png')
+      gopher = Gopher.new(400, 500, 20, 1, 'images/gopher.png')
+      python = Python.new(500, 500, 20, 1, 'images/python.png')
+
 
       enemies = []
       enemies << dlang
@@ -23,22 +33,19 @@ module Game
       enemies << gopher
       enemies << python
 
-      p enemies
       enemies.each do |enemy|
         @space.add(enemy)
       end
 
-      #@opbjects = [enemies]
       enemies.map do |enemy|
         @objects << enemy
       end
 
-      p @objects
+      # ゲーム世界に障害物となる静的BOXを追加
+      @bg_img = Image.load('images/back_bg.png')
+      @space = CP::Space.new
+      @space.gravity = CP::Vec2.new(0, 150)
 
-      # プレイヤーオブジェクトを物理演算空間に登録
-      #@space.add(player)
-      # ゲーム世界に登場する全てのオブジェクトを格納する配列を定義
-      #@objects = [player]
 
       # ゲーム世界に障害物となる静的BOXを追加
       block = CPStaticBox.new(200, 350, 600, 400)
@@ -47,32 +54,17 @@ module Game
       @objects << block
 
       #Ruby生成
-    3.times do
+      3.times do
         r=Ruby_.new(rand(800),rand(100),30,30)
         @space.add(r)
         @objects << r
-    end
+      end
 
       # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
       #4.times do
         #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
         #@space.add(e)
         #@objects << e
-      #end
-
-      # プレイヤーオブジェクトと敵オブジェクトが衝突した際の振る舞いを定義する
-      # 以下の定義にて、プレイヤーと敵が衝突した際に、自動的にブロックの内容が実行される。
-      # ブロック引数の意味はそれぞれ以下の通り。
-      # a: 衝突元（この場合はプレイヤー）のshapeオブジェクト
-      # b: 衝突先（この場合は敵）のshapeオブジェクト
-      # arb: 衝突情報を保持するArbiterオブジェクト
-      # ※ 本プログラムでは、各shapeにattr_accessorでparent_objを定義してある。
-      # 　 例えば、playerオブジェクトを得る場合は a.parent_obj のようにすると取得できる
-      #@space.add_collision_handler(Player::COLLISION_TYPE, Enemy::COLLISION_TYPE) do |a, b, arb|
-        # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
-        #pos = arb.points.first.point
-        # 衝突個所の座標に絵を表示（1フレームで消える点に留意）
-       # Window.draw(pos.x, pos.y, star_img)
       #end
 
       #PlayerがRubyを取得
@@ -101,20 +93,50 @@ module Game
 
       @space.gravity = CP::Vec2.new(0, 500)
 
-      CPBase.generate_walls(@space)
+      @walls = []
+      @walls << CPStaticBox.new(0, 600, 900, 620)
+      @walls << CPStaticBox.new(0, 620, 900, 640)
+      @walls << CPStaticBox.new(0, 640, 900, 650)
 
-      # player = Player.new(400, 500, 45, 1, C_BLUE)
-    #   @space.add(player)
-    #   @objects = [player]
-    # end
+      @walls << CPStaticBox.new(180, 480, 360, 500)
+      @walls << CPStaticBox.new(540, 480, 720, 500)
+      @walls << CPStaticBox.new(360, 200, 540, 220)
 
-    def play
-      @objects.each do |obj|
-        obj.move  # 1フレーム分の移動処理
-        obj.draw  # 1フレーム分の描画処理
+      #@space.add(@current)
+      @walls.each do |wall|
+        @space.add(wall)
       end
-      @space.step(1 / 60.0)
-    end
-  end
-end
+
+      CPBase.generate_walls(@space)
+         player = Player.new(400, 500, 45, 1)
+         @space.add(player)
+         @objects << player
+      end
+
+      def play
+        Window.draw(0, 0, @bg_img)
+
+        @walls.each do |wall|
+          wall.draw
+        end
+        # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
+        @objects.each do |obj|
+          obj.move  # 1フレーム分の移動処理
+          obj.draw  # 1フレーム分の描画処理
+        end
+        # スコア表示
+        Window.draw_font(650,10,"★HIGHSCORE★: #{@highscore}", @font)
+        Window.draw_font(650, 40, "SCORE: #{@score}",@font)
+
+        # タイマー表示
+        @now_time = Time.now
+        @diff_time = @now_time - @start_time
+        countdown = (@limit_time - @diff_time).to_i
+        min = countdown / 60
+        sec = countdown % 60
+        Window.drawFont(10, 10, "#{min}:#{sec}", @font)
+
+        @space.step(1 / 60.0)
+      end
+   end
 end
