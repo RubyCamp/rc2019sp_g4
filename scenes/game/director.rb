@@ -8,10 +8,10 @@ module Game
     def initialize
       # 物理演算空間を作成
       @space = CP::Space.new
-      @space.gravity = CP::Vec2.new(0, 500)
+      @space.gravity = CP::Vec2.new(0, 2000)
       CPBase.generate_walls(@space)
-      image=Image.load("images/player_stay.png")
-      player = Player.new(400, 500, 25, 10, C_BLUE,image)
+
+      player = Player.new(400, 500, 45, 1, C_BLUE)
       @space.add(player)
       @objects = [player]
     end
