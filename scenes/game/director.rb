@@ -9,7 +9,7 @@ module Game
       CPBase.generate_walls(@space)
       # プレイヤーオブジェクト（円オブジェクト）作成
       #player = Player.new(21, 300, 20, 1, C_BLUE)
-      
+
       # エネミーオブジェクトの生成
       # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
       dlang = Dlang.new(0, 0, 50, 50, 'images/dlang.png')
@@ -67,17 +67,23 @@ module Game
         # 衝突個所の座標に絵を表示（1フレームで消える点に留意）
        # Window.draw(pos.x, pos.y, star_img)
       #end
-    end
 
-    # main.rb側のWindow.loop内で呼ばれるメソッド
+      @space.gravity = CP::Vec2.new(0, 500)
+
+      CPBase.generate_walls(@space)
+
+      # player = Player.new(400, 500, 45, 1, C_BLUE)
+    #   @space.add(player)
+    #   @objects = [player]
+    # end
+
     def play
-      # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
       @objects.each do |obj|
         obj.move  # 1フレーム分の移動処理
         obj.draw  # 1フレーム分の描画処理
       end
-      
       @space.step(1 / 60.0)
     end
   end
+end
 end

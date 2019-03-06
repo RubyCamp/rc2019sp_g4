@@ -1,6 +1,7 @@
 # 静的BOX
 # 重力の影響を受けない矩形オブジェクト
 class CPStaticBox < CPBase
+  COLLISION_TYPE=9
   attr_accessor :body, :shape
 
   def initialize(x1, y1, x2, y2, image = nil, e = 0.8, u = 0.8)
@@ -16,6 +17,7 @@ class CPStaticBox < CPBase
     ((@image.width / block.width) + 1).times do |i|
       @image.draw(block.width * i, 0, block)
     end
+    @shape.collision_type = self.class::COLLISION_TYPE
     @x, @y = x1, y1
     shape.e = e
     shape.u = u
