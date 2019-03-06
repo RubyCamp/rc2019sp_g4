@@ -46,6 +46,11 @@ module Game
 
       @objects << block
 
+      #Ruby生成
+        r=Ruby_.new(100,100,30,30)
+        @space.add(r)
+        @objects << r
+
       # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
       #4.times do
         #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
@@ -66,6 +71,30 @@ module Game
         #pos = arb.points.first.point
         # 衝突個所の座標に絵を表示（1フレームで消える点に留意）
        # Window.draw(pos.x, pos.y, star_img)
+      #end
+
+      #PlayerがRubyを取得
+      @space.add_collision_handler(Player::COLLISION_TYPE, Ruby_::COLLISION_TYPE) do |a, b, arb|
+        # DXrubyを削除
+        b.dispose
+        # CPを削除
+        @space.remove(b)
+      end
+
+      #PlayerがItemBoxをタッチ
+      #@space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
+        # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
+       # pos = arb.points.first.point
+        # 衝突個所の反対座標にItemを生成
+        
+      #end
+
+      #PlayerがRubyを取得
+      #@space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
+        # DXrubyを削除
+        #b.dispose
+        # CPを削除
+       # @space.remove(b)
       #end
 
       @space.gravity = CP::Vec2.new(0, 500)

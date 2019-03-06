@@ -1,20 +1,15 @@
 
-class Ruby < CPBox
-   COLLISION_TYPE = 1
+class Ruby_ < CPBox
+   COLLISION_TYPE = 2
    #イメージをrubyへ
-   def initialize
+   def initialize(x, y, width, height, mass=1, color=C_BLUE)
       super
-      @image=Image.load("../../../images.rb/ruby.png")
-      defx=@x
+      @image=Image.load("images/ruby.png")
+      @v=CP::Vec2.new(x,y)
    end
    def move
       #上下に浮遊
-      if (defx-100)=<@x&&defx>@x
-         apply_force(0,-20)  
-      elsif (defx-100)>@x
-         apply_force(0,20)
-      elsif (defx+100)=>@x
-         
-      end
+      v=@v-@body.p
+      apply_force(v.x,v.y)
    end
 end

@@ -20,6 +20,8 @@ require_relative 'scenes/game/enemies/dlang.rb'
 require_relative 'scenes/game/enemies/gopher.rb'
 require_relative 'scenes/game/enemies/python.rb'
 
+require_relative 'scenes/game/ruby.rb'
+
 Window.width = 900
 Window.height = 650
 
