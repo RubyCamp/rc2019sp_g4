@@ -13,9 +13,9 @@ module Game
       # エネミーオブジェクトの生成
       # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
       dlang = Dlang.new(-100, 200, 20, 1, 'images/dlang.png')
-      elephpant = Elephpant.new(800, 500, 20, 1, 'images/elephpant.png')
-      gopher = Gopher.new(-500, 500, 20, 1, 'images/gopher.png')
-      python = Python.new(-100, 500, 20, 1, 'images/python.png')
+      elephpant = Elephpant.new(400, 500, 20, 1, 'images/elephpant.png')
+      gopher = Gopher.new(400, 500, 20, 1, 'images/gopher.png')
+      python = Python.new(500, 500, 20, 1, 'images/python.png')
 
       enemies = []
       enemies << dlang
@@ -59,22 +59,6 @@ module Game
       @space.add(block)
 
       @objects << block
-
-   
-      # プレイヤーオブジェクトと敵オブジェクトが衝突した際の振る舞いを定義する
-      # 以下の定義にて、プレイヤーと敵が衝突した際に、自動的にブロックの内容が実行される。
-      # ブロック引数の意味はそれぞれ以下の通り。
-      # a: 衝突元（この場合はプレイヤー）のshapeオブジェクト
-      # b: 衝突先（この場合は敵）のshapeオブジェクト
-      # arb: 衝突情報を保持するArbiterオブジェクト
-      # ※ 本プログラムでは、各shapeにattr_accessorでparent_objを定義してある。
-      # 　 例えば、playerオブジェクトを得る場合は a.parent_obj のようにすると取得できる
-      #@space.add_collision_handler(Player::COLLISION_TYPE, Enemy::COLLISION_TYPE) do |a, b, arb|
-        # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
-        #pos = arb.points.first.point
-        # 衝突個所の座標に絵を表示（1フレームで消える点に留意）
-       # Window.draw(pos.x, pos.y, star_img)
-      #end
 
       CPBase.generate_walls(@space)
 
