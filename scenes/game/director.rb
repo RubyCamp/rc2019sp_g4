@@ -6,8 +6,11 @@ module Game
       @score = 0
       @highscore = 100
       # タイマー表示
-      @limit_time = 3 * 60  # 分*60
+      @limit_time = 10  # 分*60
       @start_time = Time.now
+      #BGM
+      # sound = Sound.new("sound.wav")  # sound.wav読み込み
+      # bgm = Sound.new("bgm.mid")  # bgm.mid読み込み
 
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
@@ -127,11 +130,23 @@ module Game
         @now_time = Time.now
         @diff_time = @now_time - @start_time
         countdown = (@limit_time - @diff_time).to_i
-        min = countdown / 60
-        sec = countdown % 60
-        Window.drawFont(10, 10, "#{min}:#{sec}", @font)
+        @min = countdown / 60
+        @sec = countdown % 60
+        Window.drawFont(10, 10, "#{@min}:#{@sec}", @font)
+
+        #bgm
+        # bgm.play
+        # if Input.key_push?(K_Z) then  # Zキーで再生
+        #   sound.play
+        # end
 
         @space.step(1 / 60.0)
+        scene_transition if @min < 0
       end
+
+      def scene_transition
+        Scene.move_to(:ending)
+      end
+
    end
 end
