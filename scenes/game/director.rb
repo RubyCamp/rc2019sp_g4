@@ -46,11 +46,6 @@ module Game
       @space.gravity = CP::Vec2.new(0, 150)
 
 
-      # ゲーム世界に障害物となる静的BOXを追加
-      block = CPStaticBox.new(200, 350, 600, 400)
-      @space.add(block)
-
-      @objects << block
 
       #Ruby生成
       3.times do
@@ -79,7 +74,7 @@ module Game
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
        # pos = arb.points.first.point
         # 衝突個所の反対座標にItemを生成
-        
+
       #end
 
       #PlayerがRubyを取得
@@ -90,6 +85,7 @@ module Game
        # @space.remove(b)
       #end
 
+      # ゲーム世界に障害物となる静的BOXを追加
       @space.gravity = CP::Vec2.new(0, 500)
 
       @walls = []
