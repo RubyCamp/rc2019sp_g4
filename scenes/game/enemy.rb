@@ -1,9 +1,14 @@
-class Enemy
+class Enemy < CPCircle
     attr_reader :x, :y, :img
-    def initialize
-        @x = 0
-        @y = 2
+    COLLISION_TYPE = 0
+
+    def initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
+        super
+        @x = x
+        @y = y
         @dir = 2
+        @damage = 100
+        @image =  image ? Image.load(image) : Image.load('images/default_square.png')
     end
 
     def move
@@ -21,6 +26,6 @@ class Enemy
     end
 
     def draw
-        Window.draw(@x, @y, @img)
+      Window.draw(@x, @y, @image)
     end
 end

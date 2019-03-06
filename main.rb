@@ -14,14 +14,11 @@ require_relative 'lib/cp/cp_static_box'
 
 require_relative 'scenes/game/player'
 
-
 require_relative 'scenes/game/enemy.rb'
 require_relative 'scenes/game/enemies/elephpant.rb'
 require_relative 'scenes/game/enemies/dlang.rb'
 require_relative 'scenes/game/enemies/gopher.rb'
 require_relative 'scenes/game/enemies/python.rb'
-
-
 
 Window.width = 900
 Window.height = 650
@@ -36,7 +33,6 @@ Window.loop do
   @space = CP::Space.new
   @space.gravity = CP::Vec2.new(0, 150)
 
-     
   Window.draw(0, 0, @bg_img)
   @walls = CPBase.walls
   @walls << CPStaticBox.new(0, 600, 900, 620)
@@ -51,7 +47,7 @@ Window.loop do
   @walls.each do |wall|
     @space.add(wall)
   end
-  
+ 
   @space.step(1/60.0)
     break if Input.key_push?(K_ESCAPE)
     Scene.play
