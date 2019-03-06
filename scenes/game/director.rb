@@ -55,7 +55,7 @@ module Game
 
       #Ruby生成
       3.times do
-        r=Ruby_.new(rand(800),rand(100),30,30)
+        r=Ruby.new(rand(800),rand(400),30,30)
         @space.add(r)
         @objects << r
       end
@@ -68,11 +68,11 @@ module Game
       #end
 
       #PlayerがRubyを取得
-      @space.add_collision_handler(Player::COLLISION_TYPE, Ruby_::COLLISION_TYPE) do |a, b, arb|
+      @space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
         # DXrubyを削除
-        b.dispose
+        #b.dispose
         # CPを削除
-        @space.remove(b)
+        #@space.remove(b)
       end
 
       #PlayerがItemBoxをタッチ
