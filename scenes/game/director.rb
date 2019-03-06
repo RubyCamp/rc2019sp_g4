@@ -21,9 +21,11 @@ module Game
       # エネミーオブジェクトの生成
       # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
       dlang = Dlang.new(-100, 200, 20, 1, 'images/dlang.png')
+
       elephpant = Elephpant.new(400, 500, 20, 1, 'images/elephpant.png')
       gopher = Gopher.new(400, 500, 20, 1, 'images/gopher.png')
       python = Python.new(500, 500, 20, 1, 'images/python.png')
+
 
       enemies = []
       enemies << dlang

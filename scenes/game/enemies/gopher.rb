@@ -6,6 +6,6 @@ class Gopher < Enemy
     end
 
     def move
-      @body.v = CP::Vec2.new(300, 0)
+      @body.v = CP::Vec2.new(400, 0)
     end
 end
