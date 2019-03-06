@@ -47,6 +47,52 @@ module Game
       @space.gravity = CP::Vec2.new(0, 150)
 
 
+      # ゲーム世界に障害物となる静的BOXを追加
+      block = CPStaticBox.new(200, 350, 600, 400)
+      @space.add(block)
+
+      @objects << block
+
+      #Ruby生成
+      3.times do
+        r=Ruby_.new(rand(800),rand(100),30,30)
+        @space.add(r)
+        @objects << r
+      end
+
+      # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
+      #4.times do
+        #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
+        #@space.add(e)
+        #@objects << e
+      #end
+
+      #PlayerがRubyを取得
+      @space.add_collision_handler(Player::COLLISION_TYPE, Ruby_::COLLISION_TYPE) do |a, b, arb|
+        # DXrubyを削除
+        b.dispose
+        # CPを削除
+        @space.remove(b)
+      end
+
+      #PlayerがItemBoxをタッチ
+      #@space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
+        # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
+       # pos = arb.points.first.point
+        # 衝突個所の反対座標にItemを生成
+        
+      #end
+
+      #PlayerがRubyを取得
+      #@space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
+        # DXrubyを削除
+        #b.dispose
+        # CPを削除
+       # @space.remove(b)
+      #end
+
+      @space.gravity = CP::Vec2.new(0, 500)
+
       @walls = []
       @walls << CPStaticBox.new(0, 600, 900, 620)
       @walls << CPStaticBox.new(0, 620, 900, 640)
@@ -62,36 +108,35 @@ module Game
       end
 
       CPBase.generate_walls(@space)
-
-       player = Player.new(400, 500, 45, 1)
-       @space.add(player)
-       @objects << player
-     end
-
-    def play
-      Window.draw(0, 0, @bg_img)
-
-      @walls.each do |wall|
-        wall.draw
+         player = Player.new(400, 500, 45, 1)
+         @space.add(player)
+         @objects << player
       end
-      # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
-      @objects.each do |obj|
-        obj.move  # 1フレーム分の移動処理
-        obj.draw  # 1フレーム分の描画処理
+
+      def play
+        Window.draw(0, 0, @bg_img)
+
+        @walls.each do |wall|
+          wall.draw
+        end
+        # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
+        @objects.each do |obj|
+          obj.move  # 1フレーム分の移動処理
+          obj.draw  # 1フレーム分の描画処理
+        end
+        # スコア表示
+        Window.draw_font(650,10,"★HIGHSCORE★: #{@highscore}", @font)
+        Window.draw_font(650, 40, "SCORE: #{@score}",@font)
+
+        # タイマー表示
+        @now_time = Time.now
+        @diff_time = @now_time - @start_time
+        countdown = (@limit_time - @diff_time).to_i
+        min = countdown / 60
+        sec = countdown % 60
+        Window.drawFont(10, 10, "#{min}:#{sec}", @font)
+
+        @space.step(1 / 60.0)
       end
-      # スコア表示
-      Window.draw_font(650,10,"★HIGHSCORE★: #{@highscore}", @font)
-      Window.draw_font(650, 40, "SCORE: #{@score}",@font)
-
-      # タイマー表示
-      @now_time = Time.now
-    	@diff_time = @now_time - @start_time
-    	countdown = (@limit_time - @diff_time).to_i
-    	min = countdown / 60
-    	sec = countdown % 60
-    	Window.drawFont(10, 10, "#{min}:#{sec}", @font)
-
-      @space.step(1 / 60.0)
-    end
-  end
+   end
 end
