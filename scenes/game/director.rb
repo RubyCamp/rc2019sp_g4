@@ -60,6 +60,11 @@ module Game
         @objects << r
       end
 
+      #itembox生成 staticが生成できない
+      itembox=ItemBox.new(500,500,50,50,0.1)
+      @space.add(itembox)
+      @objects<<itembox
+
       # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
       #4.times do
         #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
@@ -76,12 +81,14 @@ module Game
       end
 
       #PlayerがItemBoxをタッチ
-      #@space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
+      @space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
-       # pos = arb.points.first.point
+        pos = arb.points.first.point
         # 衝突個所の反対座標にItemを生成
-        
-      #end
+        item=Item.new(pos.x,pos.y,30,30,1)
+        @space.add(item)
+        @objects << item
+      end
 
       #PlayerがRubyを取得
       #@space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
