@@ -47,9 +47,11 @@ module Game
       @objects << block
 
       #Ruby生成
-        r=Ruby_.new(100,100,30,30)
+    3.times do
+        r=Ruby_.new(rand(800),rand(100),30,30)
         @space.add(r)
         @objects << r
+    end
 
       # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
       #4.times do
