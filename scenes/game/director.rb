@@ -38,7 +38,7 @@ module Game
       # プレイヤーオブジェクトを物理演算空間に登録
       #@space.add(player)
       # ゲーム世界に登場する全てのオブジェクトを格納する配列を定義
-      @objects = [player]
+      # @objects = [player]
       @bg_img = Image.load('images/back_bg.png')
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 150)
