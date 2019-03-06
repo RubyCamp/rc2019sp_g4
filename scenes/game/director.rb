@@ -34,7 +34,6 @@ module Game
       end
 
       p @objects
-
       # プレイヤーオブジェクトを物理演算空間に登録
       #@space.add(player)
       # ゲーム世界に登場する全てのオブジェクトを格納する配列を定義
@@ -68,14 +67,12 @@ module Game
        # Window.draw(pos.x, pos.y, star_img)
       #end
 
-      @space.gravity = CP::Vec2.new(0, 500)
-
       CPBase.generate_walls(@space)
 
-      # player = Player.new(400, 500, 45, 1, C_BLUE)
-    #   @space.add(player)
-    #   @objects = [player]
-    # end
+       player = Player.new(400, 500, 45, 1)
+       @space.add(player)
+       @objects << player
+     end
 
     def play
       @objects.each do |obj|
@@ -85,5 +82,4 @@ module Game
       @space.step(1 / 60.0)
     end
   end
-end
 end
