@@ -1,42 +1,58 @@
-# 同じディレクトリにある「player.rb」「enemy.rb」を読み込む
-# 結果、それらの中に定義されているPlayerクラス・Enemyクラスがこのプログラム内で使えるようになる
-
 module Game
-# ゲームの進行を司るクラスを定義する
-# main.rbを無暗に長くしたくないので、ゲームにまつわる複雑な部分はこのクラスで吸収・隠ぺいする。
   class Director
     def initialize
-      # 物理演算空間を作成
       @space = CP::Space.new
-      # 物理演算空間に重力を設定（鉛直方向に強さ500）
-      @space.gravity = CP::Vec2.new(0, 500)
 
-      # 衝突時に表示する画像を読み込み、画像中の白色を透明色に設定
-      star_img = Image.load('images/star.JPG')
-      star_img.set_color_key(C_WHITE)
+      @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
 
-      # オブジェクトがウィンドウの描画範囲を逸脱しないよう、描画範囲のすぐ外側の4方向に固定の壁
-      # を設置する。
+      @objects = []
+      # オブジェクトがウィンドウの範囲を出ないよう、範囲のすぐ外側の4方向に固定の壁を設置
       CPBase.generate_walls(@space)
       # プレイヤーオブジェクト（円オブジェクト）作成
-      player = Player.new(21, 300, 20, 1, C_BLUE)
-      # プレイヤーオブジェクトを物理演算空間に登録
-      @space.add(player)
+      #player = Player.new(21, 300, 20, 1, C_BLUE)
+      
+      # エネミーオブジェクトの生成
+      # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
+      dlang = Dlang.new(0, 0, 50, 50, 'images/dlang.png')
+      elephpant = Elephpant.new(50, 50, 20, 30, 'images/elephpant.png')
+      gopher = Gopher.new(100, 100, 10, 30, 'images/gopher.png')
+      python = Python.new(150, 150, 90, 70, 'images/python.png')
 
+      enemies = []
+      enemies << dlang
+      enemies << elephpant
+      enemies << gopher
+      enemies << python
+
+      p enemies
+      enemies.each do |enemy|
+        @space.add(enemy)
+      end
+
+      #@opbjects = [enemies]
+      enemies.map do |enemy|
+        @objects << enemy
+      end
+
+      p @objects
+
+      # プレイヤーオブジェクトを物理演算空間に登録
+      #@space.add(player)
       # ゲーム世界に登場する全てのオブジェクトを格納する配列を定義
-      @objects = [player]
+      #@objects = [player]
 
       # ゲーム世界に障害物となる静的BOXを追加
       block = CPStaticBox.new(200, 350, 600, 400)
       @space.add(block)
+
       @objects << block
 
       # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
-      10.times do
-        #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30, 10, C_RED)
-       # @space.add(e)
+      #4.times do
+        #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
+        #@space.add(e)
         #@objects << e
-      end
+      #end
 
       # プレイヤーオブジェクトと敵オブジェクトが衝突した際の振る舞いを定義する
       # 以下の定義にて、プレイヤーと敵が衝突した際に、自動的にブロックの内容が実行される。
@@ -52,17 +68,20 @@ module Game
         # 衝突個所の座標に絵を表示（1フレームで消える点に留意）
        # Window.draw(pos.x, pos.y, star_img)
       #end
+
+      @space.gravity = CP::Vec2.new(0, 500)
+      CPBase.generate_walls(@space)
+      image=Image.load("images/player_stay.png")
+      player = Player.new(400, 500, 25, 10, C_BLUE,image)
+      @space.add(player)
+      @objects = [player]
     end
 
-    # main.rb側のWindow.loop内で呼ばれるメソッド
     def play
-      # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
       @objects.each do |obj|
         obj.move  # 1フレーム分の移動処理
         obj.draw  # 1フレーム分の描画処理
       end
-
-      # 物理演算空間内の時間を1/60秒進める（1フレーム分の時間進行）
       @space.step(1 / 60.0)
     end
   end

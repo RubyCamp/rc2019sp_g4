@@ -1,7 +1,7 @@
 require_relative '../enemy.rb'
-class Elephpant < Enemy
+class Dlang < Enemy
     def initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
         super
-        #@img = Image.load('images/elephpant.png')
+        #@img = Image.load('images/dlang.png')
     end
 end

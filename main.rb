@@ -13,7 +13,12 @@ require_relative 'lib/cp/cp_box'
 require_relative 'lib/cp/cp_static_box'
 
 require_relative 'scenes/game/player'
-require_relative 'scenes/game/enemy'
+
+require_relative 'scenes/game/enemy.rb'
+require_relative 'scenes/game/enemies/elephpant.rb'
+require_relative 'scenes/game/enemies/dlang.rb'
+require_relative 'scenes/game/enemies/gopher.rb'
+require_relative 'scenes/game/enemies/python.rb'
 
 Window.width = 900
 Window.height = 650
@@ -47,8 +52,8 @@ Window.loop do
   @walls.each do |wall|
       wall.draw
   end
-
-  space.step(1/60.0)
-    break if Input.key_push?(K_ESCAPE)
+  
+  @space.step(1/60.0)
+   　break if Input.key_push?(K_ESCAPE)
     Scene.play
 end
