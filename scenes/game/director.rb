@@ -2,7 +2,6 @@ module Game
   class Director
     def initialize
       @space = CP::Space.new
-
       @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
 
       @objects = []
@@ -70,9 +69,10 @@ module Game
       #end
 
       @space.gravity = CP::Vec2.new(0, 500)
+
       CPBase.generate_walls(@space)
-      image=Image.load("images/player_stay.png")
-      player = Player.new(400, 500, 25, 10, C_BLUE,image)
+
+      player = Player.new(400, 500, 45, 1, C_BLUE)
       @space.add(player)
       @objects = [player]
     end
