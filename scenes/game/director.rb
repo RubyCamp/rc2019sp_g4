@@ -12,10 +12,10 @@ module Game
 
       # エネミーオブジェクトの生成
       # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
-      dlang = Dlang.new(0, 0, 50, 50, 'images/dlang.png')
-      elephpant = Elephpant.new(50, 50, 20, 30, 'images/elephpant.png')
-      gopher = Gopher.new(100, 100, 10, 30, 'images/gopher.png')
-      python = Python.new(150, 150, 90, 70, 'images/python.png')
+      dlang = Dlang.new(-100, 200, 20, 1, 'images/dlang.png')
+      elephpant = Elephpant.new(800, 500, 20, 1, 'images/elephpant.png')
+      gopher = Gopher.new(-500, 500, 20, 1, 'images/gopher.png')
+      python = Python.new(-100, 500, 20, 1, 'images/python.png')
 
       enemies = []
       enemies << dlang
@@ -23,17 +23,14 @@ module Game
       enemies << gopher
       enemies << python
 
-      p enemies
       enemies.each do |enemy|
         @space.add(enemy)
       end
 
-      #@opbjects = [enemies]
       enemies.map do |enemy|
         @objects << enemy
       end
 
-      p @objects
       # プレイヤーオブジェクトを物理演算空間に登録
       #@space.add(player)
       # ゲーム世界に登場する全てのオブジェクトを格納する配列を定義
@@ -63,13 +60,7 @@ module Game
 
       @objects << block
 
-      # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
-      #4.times do
-        #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
-        #@space.add(e)
-        #@objects << e
-      #end
-
+   
       # プレイヤーオブジェクトと敵オブジェクトが衝突した際の振る舞いを定義する
       # 以下の定義にて、プレイヤーと敵が衝突した際に、自動的にブロックの内容が実行される。
       # ブロック引数の意味はそれぞれ以下の通り。
