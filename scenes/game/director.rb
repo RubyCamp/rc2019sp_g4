@@ -6,11 +6,13 @@ module Game
       @score = 0
       @highscore = 100
       # タイマー表示
-      @limit_time = 10  # 分*60
+      @limit_time = 20  # 分*60
       @start_time = Time.now
       #BGM
-      # sound = Sound.new("sound.wav")  # sound.wav読み込み
-      # bgm = Sound.new("bgm.mid")  # bgm.mid読み込み
+      @bgm = Sound.new("sound/bgm.WAV")
+      @bgm.play
+      sound = Sound.new("sound/ruby.wav")  # sound.wav読み込み
+      # @bgm = Sound.new("bgm3.mp3")  # bgm.mid読み込み
 
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
@@ -67,7 +69,8 @@ module Game
       #PlayerがRubyを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Ruby_::COLLISION_TYPE) do |a, b, arb|
         # DXrubyを削除
-        b.dispose
+        sound.play
+        # b.dispose
         # CPを削除
         @space.remove(b)
       end
@@ -135,10 +138,8 @@ module Game
         Window.drawFont(10, 10, "#{@min}:#{@sec}", @font)
 
         #bgm
-        # bgm.play
-        # if Input.key_push?(K_Z) then  # Zキーで再生
-        #   sound.play
-        # end
+        if Input.key_push?(K_Z) then  # Zキーで再生
+        end
 
         @space.step(1 / 60.0)
         scene_transition if @min < 0
