@@ -12,7 +12,7 @@ module Game
 
       #BGM
       sound = Sound.new("sound/ruby.wav")  # sound.wav読み込み
-      @bgm = Sound.new("sound/bgm.WAV")
+      @bgm = Sound.new("sound/bgm.wav")
       @i=0
 
       @space = CP::Space.new
@@ -56,9 +56,9 @@ module Game
       end
 
       #itembox生成 staticが生成できない
-      itembox=ItemBox.new(450,450,500,500)
+      itembox = ItemBox.new(450,450,500,500)
       @space.add(itembox)
-      @objects<<itembox
+      @objects << itembox
 
       #PlayerがRubyを取得
       @deleting_objs=[]
@@ -84,14 +84,12 @@ module Game
       #PlayerがRubyを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
-      end        
+      end
 
       @space.gravity = CP::Vec2.new(0, 1000)
 
       @walls = []
-      @walls << CPStaticBox.new(0, 600, 900, 620)
-      @walls << CPStaticBox.new(0, 620, 900, 640)
-      @walls << CPStaticBox.new(0, 640, 900, 650)
+      @walls << CPStaticBox.new(0, 600, 900, 650)
 
       @walls << CPStaticBox.new(180, 480, 360, 500)
       @walls << CPStaticBox.new(540, 480, 720, 500)
