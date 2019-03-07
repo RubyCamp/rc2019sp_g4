@@ -68,11 +68,9 @@ module Game
       #end
 
       #PlayerがRubyを取得
+      @deleting_objs=[]
       @space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
-        # DXrubyを削除
-        #b.dispose
-        # CPを削除
-        #@space.remove(b)
+        @deleting_objs << b.parent_obj
       end
 
       #PlayerがItemBoxをタッチ
@@ -115,6 +113,12 @@ module Game
 
       def play
         Window.draw(0, 0, @bg_img)
+
+        #削除予定のオブジェクトを削除
+        @deleting_objs.each do |obj|
+          @space.remove(obj)
+          @objects.delete(obj)
+        end
 
         @walls.each do |wall|
           wall.draw
