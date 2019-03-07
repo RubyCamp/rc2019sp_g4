@@ -50,7 +50,7 @@ module Game
 
       #Ruby生成
       3.times do
-        r = Ruby.new(rand(550)+200 ,rand(350) + 50, 30, 30)
+        r = Ruby.new(rand(550)+200 ,rand(350) + 50)
         @space.add(r)
         @objects << r
       end
@@ -62,11 +62,11 @@ module Game
 
       #PlayerがRubyを取得
       @deleting_objs = []
-      @space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
-        @deleting_objs << b.parent_obj
-        sound.play
-        @score += 100
-      end
+      #@space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
+      #  @deleting_objs << b.parent_obj
+      #  sound.play
+      #  @score += 100
+      #end
 
       @add_objs = []
 
