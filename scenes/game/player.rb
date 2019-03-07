@@ -1,7 +1,8 @@
 class Player < CPCircle
   COLLISION_TYPE = 1
+  attr_accessor :jumpable
 
-  def initialize(x,y,r,mass,e = 0, u = 0)
+  def initialize(x,y,r,mass,e, u)
 
     @images= {
       right: Image.load("images/player_run1.png"),
@@ -11,6 +12,9 @@ class Player < CPCircle
 
     @current_image = @images[:right]
     super(x,y,r,mass,@current_image,e,u)
+
+    @jumpable = true
+
   end
 
   def move
@@ -21,9 +25,11 @@ class Player < CPCircle
     apply_force(50, 0) if Input.key_down?(K_RIGHT)
     apply_force(-50, 0) if Input.key_down?(K_LEFT)
     apply_force(0, 100) if Input.key_down?(K_DOWN)
-    if Input.key_push?(K_UP)
-      apply_force(0, -750)
+    if Input.key_push?(K_UP) && @jumpable
+      apply_force(0, -5000)
+
       @current_image = @images[:jump]
+      @jumpable = false
     end
   end
 
