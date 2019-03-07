@@ -19,7 +19,7 @@ class Player < CPCircle
 
   end
 
- def move
+def move
    if @jumpable
      if @body.v.x > 0
        @current_image = @images[:right]
@@ -35,8 +35,8 @@ class Player < CPCircle
     apply_force(-50, 0) if Input.key_down?(K_LEFT)
     apply_force(0, 100) if Input.key_down?(K_DOWN)
     if Input.key_push?(K_UP) && @jumpable
-      apply_force(0, -5000)
-
+      apply_force(0, -4500)
+     
       @current_image = @images[:jump]
       @jumpable = false
     end
