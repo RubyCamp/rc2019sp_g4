@@ -4,7 +4,7 @@ class CPStaticBox < CPBase
   COLLISION_TYPE=9
   attr_accessor :body, :shape
 
-  def initialize(x1, y1, x2, y2, image = nil, e = 0.8, u = 0.8)
+  def initialize(x1, y1, x2, y2, image = nil, e = 0.8, u = 1)
     @body = nil
     if File.exist?('images/block_base.png')
       block = Image.load('images/block_base.png')
