@@ -40,10 +40,11 @@ module Game
       @deleting_items = []
       @objects = []
 
-      itemFlg = true
+      @item_Flg = true
       ruby_Flg = true
 
       enemies_Defeated_Num = 0
+      @interval = 0
 
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 1000)
@@ -111,9 +112,14 @@ module Game
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
         pos = arb.points.first.point
         # 追加アイテム配列に追加
-        if itemFlg == true
+        if @item_Flg == true
           @add_items << pos
-          itemFlg = false
+          @interval = Time.now + 5
+          @item_Flg = false
+        elsif @interval < Time.now
+          @add_items << pos
+          @interval = Time.now + 5
+          @item_Flg = false
         end
         true
       end
