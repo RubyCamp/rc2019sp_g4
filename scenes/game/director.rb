@@ -15,10 +15,10 @@ module Game
       @bgm = Sound.new("sound/bgm.WAV")
       @i=0
 
-
       @space = CP::Space.new
-      @space.gravity = CP::Vec2.new(0, 100) #重力500として作成
-
+      @space.gravity = CP::Vec2.new(0, 1000) #重力500として作成
+      
+      #オブジェクトの配列
       @objects = []
       # オブジェクトがウィンドウの範囲を出ないよう、範囲のすぐ外側の4方向に固定の壁を設置
       CPBase.generate_walls(@space)
@@ -26,12 +26,10 @@ module Game
       #player = Player.new(21, 300, 20, 1, C_BLUE)
 
       # エネミーオブジェクトの生成
-      # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
       dlang = Dlang.new(-100, 200, 20, 1, 'images/dlang.png')
       elephpant = Elephpant.new(400, 500, 20, 1, 'images/elephpant.png')
       gopher = Gopher.new(400, 500, 20, 1, 'images/gopher.png')
       python = Python.new(500, 500, 20, 1, 'images/python.png')
-
 
       enemies = []
       enemies << dlang
@@ -49,10 +47,6 @@ module Game
 
       # ゲーム世界に障害物となる静的BOXを追加
       @bg_img = Image.load('images/back_bg.png')
-      @space = CP::Space.new
-      @space.gravity = CP::Vec2.new(0, 150)
-
-
 
       #Ruby生成
       3.times do
@@ -65,13 +59,6 @@ module Game
       itembox=ItemBox.new(450,450,500,500)
       @space.add(itembox)
       @objects<<itembox
-
-      # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
-      #4.times do
-        #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
-        #@space.add(e)
-        #@objects << e
-      #end
 
       #PlayerがRubyを取得
       @deleting_objs=[]
@@ -87,13 +74,13 @@ module Game
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
         pos = arb.points.first.point
         # 衝突個所の反対座標にItemを生成
-
         if itemFlg==true
           @add_objs << pos
           itemFlg=false
         end
         true
       end
+
       #PlayerがRubyを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
@@ -115,19 +102,17 @@ module Game
         @space.add(wall)
       end
 
-      CPBase.generate_walls(@space)
-         player = Player.new(400, 500, 45, 10, 0, 1)
-         @space.add(player)
-         @objects << player
-      end
+      player = Player.new(400, 500, 45, 10, 0, 1)
+      @space.add(player)
+      @objects << player
+      
 
       def play
         #BGMを再生する
         if @i==0 then
-        @bgm.play
-        @i=1
+          @bgm.play
+          @i=1
         end
-
 
         Window.draw(0, 0, @bg_img)
 
@@ -141,7 +126,6 @@ module Game
           wall.draw
         end
 
-
         @add_objs.each do |obj2|
           item=Item.new(430,440,30,30,1)
           @space.add(item)
@@ -151,7 +135,6 @@ module Game
 
         @space.add_collision_handler(Player::COLLISION_TYPE, CPStaticBox::COLLISION_TYPE) do |a, b, arb|
           player = a.parent_obj
-          #puts player.body.v.y
           if player.body.v.y >= 0
             player.jumpable = true
           end
@@ -176,17 +159,12 @@ module Game
         @sec = countdown % 60
         Window.drawFont(10, 10, "#{@min}:#{@sec}", @font)
 
-        #bgm
-        if Input.key_push?(K_Z) then  # Zキーで再生
-        end
-
         @space.step(1 / 60.0)
-        scene_transition if @min < 0
+        scene_transition if @min < 0 end
       end
 
       def scene_transition
         Scene.move_to(:ending)
       end
-
    end
 end
