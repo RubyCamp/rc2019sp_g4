@@ -61,7 +61,7 @@ module Game
         @objects << r
       end
 
-      # itemboxオブジェクトの生成 
+      # itemboxオブジェクトの生成
       itembox = ItemBox.new(450, 450, 500, 500)
       @space.add(itembox)
       @objects << itembox
@@ -92,7 +92,7 @@ module Game
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
         player = a.parent_obj
-        player.get_item(@item.data)  
+        player.get_item(@item.data)
       end
 
       @space.add_collision_handler(Player::COLLISION_TYPE, CPStaticBox::COLLISION_TYPE) do |a, b, arb|
@@ -106,12 +106,12 @@ module Game
       @space.add_collision_handler(Player::COLLISION_TYPE, Enemy::COLLISION_TYPE) do |a, b, arb|
         player = a.parent_obj
         enemy = b.parent_obj
-        player.game_end 
+        player.game_end
       end
 
-      create_walls      
+      create_walls
     end
-      
+
     def play
         #BGMを再生する
         if @i == 0
@@ -144,7 +144,7 @@ module Game
 
         # タイマー表示
         disp_timer
-        
+
         # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
         @objects.each do |obj|
           obj.move  # 1フレーム分の移動処理
@@ -152,7 +152,7 @@ module Game
         end
     end
 
-  
+
     private
       def scene_transition
         Scene.move_to(:ending)
@@ -183,7 +183,7 @@ module Game
 
         @space.step(1 / 60.0)
         if @min < 0
-          scene_transition 
+          scene_transition
         end
       end
 
@@ -195,4 +195,5 @@ module Game
     #   @space.add(enemy)
     #   @objects << enemy
     # end
+end
 end
