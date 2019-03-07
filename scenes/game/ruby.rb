@@ -1,5 +1,5 @@
 
-class Ruby_ < CPBox
+class Ruby < CPBox
    COLLISION_TYPE = 2
    #イメージをrubyへ
    def initialize(x, y, width, height, mass=1, color=C_BLUE)
