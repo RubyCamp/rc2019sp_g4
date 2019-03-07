@@ -40,6 +40,16 @@ class Player < CPCircle
         @current_image = @images[:jump]
         @jumpable = false
       end
+    elsif @haveItem == [["apple", false, 0, 3]]
+
+      apply_force(300, 0) if Input.key_down?(K_RIGHT)
+      apply_force(-300, 0) if Input.key_down?(K_LEFT)
+      apply_force(0, 100) if Input.key_down?(K_DOWN)
+      if Input.key_push?(K_UP) && @jumpable
+        apply_force(0, -7000)
+        @current_image = @images[:jump]
+        @jumpable = false
+      end
     else
       apply_force(50, 0) if Input.key_down?(K_RIGHT)
       apply_force(-50, 0) if Input.key_down?(K_LEFT)
