@@ -190,7 +190,7 @@ module Game
 
         # スコア表示
 
-        Window.draw_font(740, 10, "SCORE: #{@score}", @font, color: C_BLACK)
+        Window.draw_font(740, 10, "SCORE: #{@@score}", @font, color: C_BLACK)
 
 
         # タイマー表示
