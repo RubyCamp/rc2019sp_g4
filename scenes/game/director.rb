@@ -56,7 +56,7 @@ module Game
 
       #Ruby生成
       3.times do
-        r = Ruby.new(rand(550) + 200 ,rand(350) + 50, 30, 30)
+        r = Ruby.new(rand(550)+200 ,rand(350) + 50)
         @space.add(r)
         @objects << r
       end
@@ -69,9 +69,9 @@ module Game
       # ゲーム世界に障害物となる静的BOXを追加
       @bg_img = Image.load('images/back_bg.png')
 
-      #PlayerがRubyを取得
-      @space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
-        @deleting_objs << b.parent_obj
+      #EnemyがRubyとぶつかる
+      @space.add_collision_handler(Enemy::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
+        @deleting_objs << a.parent_obj
         sound.play
         @score += 100
       end
