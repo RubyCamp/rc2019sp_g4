@@ -56,7 +56,8 @@ module Game
       end
 
       #itembox生成 
-      itembox = ItemBox.new(450, 450, 500, 500)
+      itembox = ItemBox.new(350, 20, 400, 70)
+
       @space.add(itembox)
       @objects << itembox
 
@@ -136,7 +137,8 @@ module Game
 
         @add_items.each do |obj2|
           class_Name=[Beer, Apple, Choco]
-          @item = class_Name.sample.new(460, 440, 30, 30, 1)
+          @item = class_Name.sample.new(345,20,30,30,1)
+
           @space.add(@item)
           @objects << @item
           @add_items.delete(obj2)
