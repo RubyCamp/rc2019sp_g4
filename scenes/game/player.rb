@@ -31,7 +31,8 @@ class Player < CPCircle
     else
       @current_image = @images[:jump]
     end
-    if @haveItem == [["beer", true, 0, 1]]
+    if @haveItem == ["beer", true, 0, 1]
+      puts "qqq"
       apply_force(50, 0) if Input.key_down?(K_LEFT)
       apply_force(-50, 0) if Input.key_down?(K_RIGHT)
       apply_force(0, 100) if Input.key_down?(K_UP)
@@ -40,8 +41,8 @@ class Player < CPCircle
         @current_image = @images[:jump]
         @jumpable = false
       end
-    elsif @haveItem == [["apple", false, 0, 3]]
-
+    elsif @haveItem == ["apple", false, 0, 3]
+      puts "ddd"
       apply_force(300, 0) if Input.key_down?(K_RIGHT)
       apply_force(-300, 0) if Input.key_down?(K_LEFT)
       apply_force(0, 100) if Input.key_down?(K_DOWN)
@@ -74,7 +75,7 @@ class Player < CPCircle
   end
 
   def get_item(item)
-    @haveItem << item
+    @haveItem = item
   end
 
   def game_over
