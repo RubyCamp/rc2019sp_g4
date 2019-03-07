@@ -59,6 +59,11 @@ module Game
         @objects << r
       end
 
+      #itembox生成 staticが生成できない
+      itembox=ItemBox.new(450,450,500,500)
+      @space.add(itembox)
+      @objects<<itembox
+
       # 敵キャラクタ（四角形）を10個ほど生成して、物理演算空間に登録＆@objecctsに格納
       #4.times do
         #e = Enemy.new(100 + rand(500), 100 + rand(300), 30, 30,'images/block_base.png', 10, C_RED)
@@ -75,21 +80,24 @@ module Game
         @space.remove(b)
       end
 
+      @add_objs=[]
+      itemFlg=true
       #PlayerがItemBoxをタッチ
-      #@space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
+      @space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
-       # pos = arb.points.first.point
+        pos = arb.points.first.point
         # 衝突個所の反対座標にItemを生成
 
-      #end
-
+        if itemFlg==true
+          @add_objs << pos
+          itemFlg=false
+        end
+        true
+      end
       #PlayerがRubyを取得
-      #@space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
-        # DXrubyを削除
-        #b.dispose
-        # CPを削除
-       # @space.remove(b)
-      #end
+      @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
+        @deletiing_obj << b.parent_obj
+      end
 
 
       @space.gravity = CP::Vec2.new(0, 1000)
@@ -121,6 +129,14 @@ module Game
           wall.draw
         end
 
+        
+        @add_objs.each do |obj2|
+          item=Item.new(430,440,30,30,1)
+          @space.add(item)
+          @objects << item
+          @add_objs.delete(obj2)
+        end
+
         @space.add_collision_handler(Player::COLLISION_TYPE, CPStaticBox::COLLISION_TYPE) do |a, b, arb|
           player = a.parent_obj
           #puts player.body.v.y
@@ -128,6 +144,7 @@ module Game
             player.jumpable = true
           end
         end
+
 
         # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
         @objects.each do |obj|

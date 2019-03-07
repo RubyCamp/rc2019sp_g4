@@ -21,6 +21,8 @@ require_relative 'scenes/game/enemies/gopher.rb'
 require_relative 'scenes/game/enemies/python.rb'
 
 require_relative 'scenes/game/ruby.rb'
+require_relative 'scenes/game/itemBox.rb'
+require_relative 'scenes/game/item.rb'
 
 Window.width = 900
 Window.height = 650
