@@ -3,7 +3,7 @@ module Game
     def initialize
       # スコア表示
       @font = Font.new(30)
-      @score = 0
+      @@score = 0
       @highscore = 100
 
       # タイマー表示
@@ -40,10 +40,11 @@ module Game
       @deleting_items = []
       @objects = []
 
-      itemFlg = true
+      @item_Flg = true
       ruby_Flg = true
 
       enemies_Defeated_Num = 0
+      @interval = 0
 
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 1000)
@@ -56,8 +57,8 @@ module Game
       # オブジェクトの生成
       # enemyオブジェクトの生成
       @dlang = Dlang.new(rand(200), rand(200), 40, 1, 'images/dlang.png')
-      @elephpant = Elephpant.new(rand(800), rand(500), 40, 1, 'images/elephpant.png')
-      @gopher = Gopher.new(rand(200), rand(500), 40, 1, 'images/gopher.png')
+      @elephpant = Elephpant.new(rand(800), 200, 40, 1, 'images/elephpant.png')
+      @gopher = Gopher.new(rand(200), rand(200), 40, 1, 'images/gopher.png')
       @python = Python.new(rand(500), rand(200), 40, 1, 'images/python.png')
 
       @enemies = []
@@ -102,7 +103,7 @@ module Game
         if ruby_Flg == false
           @deleting_objs << a.parent_obj
           sound.play
-          @score += 100
+          @@score += 100
         end
       end
 
@@ -111,9 +112,14 @@ module Game
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
         pos = arb.points.first.point
         # 追加アイテム配列に追加
-        if itemFlg == true
+        if @item_Flg == true
           @add_items << pos
-          itemFlg = false
+          @interval = Time.now + 5
+          @item_Flg = false
+        elsif @interval < Time.now
+          @add_items << pos
+          @interval = Time.now + 5
+          @item_Flg = false
         end
         true
       end
@@ -152,11 +158,11 @@ module Game
         Window.draw(0, 0, @bg_img)
 
         # ゲームクリアか判断する
-      enemies_Defeated_Num = @deleting_objs.count
-      if enemies_Defeated_Num == 4
-        enemies_Defeated_Num = 0
-        Scene.move_to(:gameclear)
-      end
+        enemies_Defeated_Num = @deleting_objs.count
+        if enemies_Defeated_Num == 4
+          enemies_Defeated_Num = 0
+          Scene.move_to(:gameclear)
+        end
 
         # 削除予定のアイテムを削除
         @deleting_items.each do | obj |
@@ -195,6 +201,10 @@ module Game
           obj.move  # 1フレーム分の移動処理
           obj.draw  # 1フレーム分の描画処理
         end
+    end
+
+    def self.get_score
+      @@score
     end
 
     private

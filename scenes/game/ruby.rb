@@ -1,4 +1,3 @@
-
 class Ruby < CPCircle
    COLLISION_TYPE = 2
    #イメージをrubyへ
