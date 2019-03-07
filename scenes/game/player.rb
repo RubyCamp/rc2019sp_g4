@@ -17,7 +17,7 @@ class Player < CPCircle
 
   end
 
-  def move
+ def move
     @current_image = @images[:right] if Input.key_push?(K_RIGHT)
     @current_image = @images[:left] if Input.key_push?(K_LEFT)
     @current_image = @images[:jump] if Input.key_push?(K_DOWN)
