@@ -17,7 +17,7 @@ module Game
 
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 1000) #重力500として作成
-      
+
       #オブジェクトの配列
       @objects = []
       # オブジェクトがウィンドウの範囲を出ないよう、範囲のすぐ外側の4方向に固定の壁を設置
@@ -69,7 +69,7 @@ module Game
 
       @add_objs=[]
       itemFlg=true
-      
+
       #PlayerがItemBoxをタッチ
       @space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
@@ -86,8 +86,8 @@ module Game
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
         getName = @item.item_name
-      end        
-      
+      end
+
       @space.gravity = CP::Vec2.new(0, 1000)
 
       @walls = []
@@ -108,7 +108,7 @@ module Game
       player = Player.new(400, 500, 45, 10, 0, 1)
       @space.add(player)
       @objects << player
-      
+
 
       def play
         #BGMを再生する
