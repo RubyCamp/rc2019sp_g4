@@ -50,7 +50,7 @@ module Game
 
       #Ruby生成
       3.times do
-        r=Ruby.new(rand(800),rand(400),30,30)
+        r = Ruby.new(rand(550)+200 ,rand(350) + 50, 30, 30)
         @space.add(r)
         @objects << r
       end
@@ -61,7 +61,7 @@ module Game
       @objects << itembox
 
       #PlayerがRubyを取得
-      @deleting_objs=[]
+      @deleting_objs = []
       @space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
         sound.play
@@ -69,23 +69,25 @@ module Game
 
       @add_objs=[]
       itemFlg=true
+      
       #PlayerがItemBoxをタッチ
       @space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
         pos = arb.points.first.point
         # 衝突個所の反対座標にItemを生成
-        if itemFlg==true
+        if itemFlg == true
           @add_objs << pos
-          itemFlg=false
+          itemFlg = false
         end
         true
       end
 
-      #PlayerがRubyを取得
+      #PlayerがItemを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
-      end
-
+        getName = @item.item_name
+      end        
+      
       @space.gravity = CP::Vec2.new(0, 1000)
 
       @walls = []
@@ -128,9 +130,9 @@ module Game
         end
 
         @add_objs.each do |obj2|
-          item=Item.new(430,440,30,30,1)
-          @space.add(item)
-          @objects << item
+          @item=Item.new(460,440,30,30,1)
+          @space.add(@item)
+          @objects << @item
           @add_objs.delete(obj2)
         end
 
