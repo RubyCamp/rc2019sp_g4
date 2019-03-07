@@ -67,7 +67,7 @@ module Game
       @objects << itembox
 
       # ゲーム世界に障害物となる静的BOXを追加
-      @bg_img = Image.load('images/back_bg.png')
+      @bg_img = Image.load('images/icesize.png')
 
       #EnemyがRubyとぶつかる
       @space.add_collision_handler(Enemy::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
@@ -139,7 +139,6 @@ module Game
         end
 
         # スコア表示
-        Window.draw_font(650, 10, "★HIGHSCORE★: #{@highscore}", @font)
         Window.draw_font(650, 40, "SCORE: #{@score}", @font)
 
         # タイマー表示
@@ -186,14 +185,5 @@ module Game
           scene_transition
         end
       end
-
-    # def enemy_register
-    #   if @enemies.length == 0
-    #     return
-    #   end
-    #   enemy = @enemies.shift
-    #   @space.add(enemy)
-    #   @objects << enemy
-    # end
-end
+    end
 end
