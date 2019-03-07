@@ -151,7 +151,6 @@ module Game
         end
     end
 
-
     private
       def scene_transition
         Scene.move_to(:ending)
