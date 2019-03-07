@@ -56,7 +56,7 @@ module Game
       end
 
       #itembox生成 staticが生成できない
-      itembox = ItemBox.new(450,450,500,500)
+      itembox = ItemBox.new(350,20,400,70)
       @space.add(itembox)
       @objects << itembox
 
@@ -130,7 +130,7 @@ module Game
         end
 
         @add_objs.each do |obj2|
-          @item=Item.new(460,440,30,30,1)
+          @item=Item.new(345,20,30,30,1)
           @space.add(@item)
           @objects << @item
           @add_objs.delete(obj2)
