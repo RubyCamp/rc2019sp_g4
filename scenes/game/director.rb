@@ -97,6 +97,7 @@ module Game
         player.get_item(@item.data)
       end
 
+      #Playerのジャンプ可能判定
       @space.add_collision_handler(Player::COLLISION_TYPE, CPStaticBox::COLLISION_TYPE) do |a, b, arb|
         player = a.parent_obj
         if player.body.v.y >= 0
