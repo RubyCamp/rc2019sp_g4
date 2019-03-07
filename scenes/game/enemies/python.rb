@@ -5,7 +5,10 @@ class Python < Enemy
     end
 
     def move
-      apply_force(-5, 0)
-      #@body.v = CP::Vec2.new(300, 0)
+      if rand(100) % 3 == 0 
+        apply_force(rand(-10..10), -50)
+      else
+        apply_force(rand(-10..10), 10)
+      end
     end
 end
