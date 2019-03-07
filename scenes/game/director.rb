@@ -15,6 +15,25 @@ module Game
       @bgm = Sound.new("sound/bgm.wav")
       @i = 0
 
+      @box_x11 = rand(0 .. 450)
+      @box_x12 = @box_x11 + 100
+      @box_x21 = rand(0 .. 450)
+      @box_x22 = @box_x21 + 100
+      @box_x31 = rand(450 .. 900)
+      @box_x32 = @box_x31 + 100
+      @box_x41 = rand(450 .. 900)
+      @box_x42 = @box_x41 + 100
+
+      @box_y11 = 480
+      @box_y12 = 500
+      @box_y21 = 350
+      @box_y22 = 370
+      @box_y31 = 100
+      @box_y32 = 120
+      @box_y41 = 50
+      @box_y42 = 70
+
+      @add_objs = []
       @deleting_objs = []
       @add_items = []
       @walls = []
@@ -155,7 +174,9 @@ module Game
         end
 
         # スコア表示
+
         Window.draw_font(740, 10, "SCORE: #{@score}", @font, color: C_BLACK)
+
 
         # タイマー表示
         disp_timer
@@ -173,14 +194,18 @@ module Game
       end
 
       def create_walls
-        @walls << CPStaticBox.new(0, 600, 900, 650)
-
-        @walls << CPStaticBox.new(180, 480, 360, 500)
-        @walls << CPStaticBox.new(540, 480, 720, 500)
-        @walls << CPStaticBox.new(300, 200, 540, 220)
-        @walls << CPStaticBox.new(100, 350, 240, 370)
-        @walls << CPStaticBox.new(700, 350, 870, 370)
-        @walls << CPStaticBox.new(300, 320, 600, 340)
+        #一番下
+         @walls << CPStaticBox.new(0, 600, 900, 650)
+         #1列目
+         @walls << CPStaticBox.new(@box_x11, @box_y11,@box_x12, @box_y12)
+         @walls << CPStaticBox.new(@box_x21, @box_y11,@box_x22, @box_y12)
+         @walls << CPStaticBox.new(@box_x31, @box_y11,@box_x32, @box_y12)
+         @walls << CPStaticBox.new(@box_x41, @box_y11,@box_x42, @box_y12)
+         #2列目
+         @walls << CPStaticBox.new(@box_x11, @box_y21,@box_x12, @box_y22)
+         @walls << CPStaticBox.new(@box_x21, @box_y21,@box_x22, @box_y22)
+         @walls << CPStaticBox.new(@box_x31, @box_y21,@box_x32, @box_y22)
+         @walls << CPStaticBox.new(@box_x41, @box_y21,@box_x42, @box_y22)
 
         @walls.each do |wall|
           @space.add(wall)
