@@ -61,7 +61,7 @@ module Game
       end
 
       #itembox生成 staticが生成できない
-      itembox=ItemBox.new(500,500,50,50,0.1)
+      itembox=ItemBox.new(450,450,500,500)
       @space.add(itembox)
       @objects<<itembox
 
@@ -80,23 +80,24 @@ module Game
         @space.remove(b)
       end
 
+      @add_objs=[]
+      itemFlg=true
       #PlayerがItemBoxをタッチ
       @space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
         pos = arb.points.first.point
         # 衝突個所の反対座標にItemを生成
-        item=Item.new(pos.x,pos.y,30,30,1)
-        @space.add(item)
-        @objects << item
+        if itemFlg==true
+          @add_objs << pos
+          itemFlg=false
+        end
+        true
       end
 
       #PlayerがRubyを取得
-      #@space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
-        # DXrubyを削除
-        #b.dispose
-        # CPを削除
-       # @space.remove(b)
-      #end
+      @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
+        @deletiing_obj << b.parent_obj
+      end
 
       @space.gravity = CP::Vec2.new(0, 500)
 
@@ -125,6 +126,13 @@ module Game
 
         @walls.each do |wall|
           wall.draw
+        end
+        
+        @add_objs.each do |obj2|
+          item=Item.new(430,440,30,30,1)
+          @space.add(item)
+          @objects << item
+          @add_objs.delete(obj2)
         end
         # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
         @objects.each do |obj|
