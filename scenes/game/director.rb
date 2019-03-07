@@ -41,6 +41,7 @@ module Game
       @objects = []
 
       itemFlg = true
+      ruby_Flg = true
 
       enemies_Defeated_Num = 0
 
@@ -90,11 +91,19 @@ module Game
       # ゲーム世界に障害物となる静的BOXを追加
       @bg_img = Image.load('images/icesize.png')
 
+      # PlayerがRubyと接触する
+      @space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
+        ruby_Flg = false
+        true
+      end
+
       # EnemyがRubyとぶつかる
       @space.add_collision_handler(Enemy::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
-        @deleting_objs << a.parent_obj
-        sound.play
-        @score += 100
+        if ruby_Flg == false
+          @deleting_objs << a.parent_obj
+          sound.play
+          @score += 100
+        end
       end
 
       # PlayerがItemBoxに触れる
