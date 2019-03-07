@@ -1,4 +1,4 @@
-module Ending
+module Gameover
   class Director
     def initialize
       @bg_img = Image.load('images/ending_bg.png')

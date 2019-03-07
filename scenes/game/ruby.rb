@@ -11,6 +11,6 @@ class Ruby < CPCircle
       #上下に浮遊
       #v=@v-@body.p
       @body.v += CP::Vec2.new(0, -16.6)
-      #apply_force(,)
+      #apply_force(v.x,v.y)
    end
 end
