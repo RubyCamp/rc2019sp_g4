@@ -2,7 +2,7 @@ class CPCircle < CPBase
 
   attr_accessor :body, :shape
 
-  def initialize(x, y, r, mass, image = nil, e = 0, u = 0)
+  def initialize(x, y, r, mass, image = nil, e, u)
     moment = CP::moment_for_circle(mass, 0, r, CP::Vec2.new(0, 0))
     @body = CP::Body.new(mass, moment)
     @body.p = CP::Vec2.new(x + r, y + r)

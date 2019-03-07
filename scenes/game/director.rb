@@ -15,7 +15,7 @@ module Game
       # @bgm = Sound.new("bgm3.mp3")  # bgm.mid読み込み
 
       @space = CP::Space.new
-      @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
+      @space.gravity = CP::Vec2.new(0, 100) #重力500として作成
 
       @objects = []
       # オブジェクトがウィンドウの範囲を出ないよう、範囲のすぐ外側の4方向に固定の壁を設置
@@ -99,8 +99,8 @@ module Game
         @deletiing_obj << b.parent_obj
       end
 
-      # ゲーム世界に障害物となる静的BOXを追加
-      @space.gravity = CP::Vec2.new(0, 500)
+
+      @space.gravity = CP::Vec2.new(0, 1000)
 
       @walls = []
       @walls << CPStaticBox.new(0, 600, 900, 620)
@@ -117,7 +117,7 @@ module Game
       end
 
       CPBase.generate_walls(@space)
-         player = Player.new(400, 500, 45, 1)
+         player = Player.new(400, 500, 45, 10, 0, 1)
          @space.add(player)
          @objects << player
       end
@@ -128,6 +128,7 @@ module Game
         @walls.each do |wall|
           wall.draw
         end
+
         
         @add_objs.each do |obj2|
           item=Item.new(430,440,30,30,1)
@@ -135,11 +136,22 @@ module Game
           @objects << item
           @add_objs.delete(obj2)
         end
+
+        @space.add_collision_handler(Player::COLLISION_TYPE, CPStaticBox::COLLISION_TYPE) do |a, b, arb|
+          player = a.parent_obj
+          #puts player.body.v.y
+          if player.body.v.y >= 0
+            player.jumpable = true
+          end
+        end
+
+
         # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
         @objects.each do |obj|
           obj.move  # 1フレーム分の移動処理
           obj.draw  # 1フレーム分の描画処理
         end
+
         # スコア表示
         Window.draw_font(650,10,"★HIGHSCORE★: #{@highscore}", @font)
         Window.draw_font(650, 40, "SCORE: #{@score}",@font)
