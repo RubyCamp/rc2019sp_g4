@@ -15,6 +15,8 @@ class Player < CPCircle
 
     @jumpable = true
 
+    @haveItem=[]
+
   end
 
  def move
@@ -37,4 +39,11 @@ class Player < CPCircle
     Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
   end
 
+  def haveItem
+    @haveItem
+  end
+
+  def get_item(item)
+    @haveItem << item
+  end
 end

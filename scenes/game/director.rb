@@ -85,7 +85,8 @@ module Game
       #PlayerがItemを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
-        p @item.data
+        player = a.parent_obj
+        player.get_item(@item.data)  
       end        
       
       @space.gravity = CP::Vec2.new(0, 1000)
