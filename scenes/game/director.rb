@@ -207,6 +207,10 @@ module Game
       @@score
     end
 
+    def self.get_time
+      @@diff_time.to_i
+    end
+
     private
       def scene_transition
         Scene.move_to(:gameover)
@@ -233,8 +237,8 @@ module Game
 
       def disp_timer
         @now_time = Time.now
-        @diff_time = @now_time - @start_time
-        countdown = (@limit_time - @diff_time).to_i
+        @@diff_time = @now_time - @start_time
+        countdown = (@limit_time - @@diff_time).to_i
         @min = countdown / 60
         @sec = countdown % 60
         Window.drawFont(10, 10, "#{@min}:#{@sec}", @font, color: C_BLACK)
