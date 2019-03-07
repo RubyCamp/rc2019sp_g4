@@ -96,9 +96,8 @@ module Game
       end
       #PlayerがRubyを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
-        @deletiing_obj << b.parent_obj
-      end
-
+        @deleting_objs << b.parent_obj
+      end        
 
       @space.gravity = CP::Vec2.new(0, 1000)
 
@@ -142,7 +141,7 @@ module Game
           wall.draw
         end
 
-        
+
         @add_objs.each do |obj2|
           item=Item.new(430,440,30,30,1)
           @space.add(item)
