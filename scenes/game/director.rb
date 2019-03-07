@@ -67,7 +67,7 @@ module Game
         sound.play
         @score += 100
       end
-
+      
       @add_objs=[]
       itemFlg=true
 
