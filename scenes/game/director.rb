@@ -55,8 +55,8 @@ module Game
         @objects << r
       end
 
-      #itembox生成 staticが生成できない
-      itembox = ItemBox.new(450,450,500,500)
+      #itembox生成 
+      itembox = ItemBox.new(450, 450, 500, 500)
       @space.add(itembox)
       @objects << itembox
 
@@ -67,16 +67,16 @@ module Game
         sound.play
       end
 
-      @add_objs=[]
+      @add_items=[]
       itemFlg=true
       
       #PlayerがItemBoxをタッチ
       @space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
         pos = arb.points.first.point
-        # 衝突個所の反対座標にItemを生成
+        # 追加アイテム配列に追加
         if itemFlg == true
-          @add_objs << pos
+          @add_items << pos
           itemFlg = false
         end
         true
@@ -85,7 +85,7 @@ module Game
       #PlayerがItemを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
-        getName = @item.item_name
+        p @item.data
       end        
       
       @space.gravity = CP::Vec2.new(0, 1000)
@@ -129,11 +129,12 @@ module Game
           wall.draw
         end
 
-        @add_objs.each do |obj2|
-          @item=Item.new(460,440,30,30,1)
+        @add_items.each do |obj2|
+          class_Name=[Beer, Apple, Choco]
+          @item = class_Name.sample.new(460, 440, 30, 30, 1)
           @space.add(@item)
           @objects << @item
-          @add_objs.delete(obj2)
+          @add_items.delete(obj2)
         end
 
         @space.add_collision_handler(Player::COLLISION_TYPE, CPStaticBox::COLLISION_TYPE) do |a, b, arb|
