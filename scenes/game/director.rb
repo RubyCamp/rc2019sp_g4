@@ -57,8 +57,8 @@ module Game
       # オブジェクトの生成
       # enemyオブジェクトの生成
       @dlang = Dlang.new(rand(200), rand(200), 40, 1, 'images/dlang.png')
-      @elephpant = Elephpant.new(rand(800), rand(500), 40, 1, 'images/elephpant.png')
-      @gopher = Gopher.new(rand(200), rand(500), 40, 1, 'images/gopher.png')
+      @elephpant = Elephpant.new(rand(800), 200, 40, 1, 'images/elephpant.png')
+      @gopher = Gopher.new(rand(200), rand(200), 40, 1, 'images/gopher.png')
       @python = Python.new(rand(500), rand(200), 40, 1, 'images/python.png')
 
       @enemies = []
