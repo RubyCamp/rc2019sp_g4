@@ -62,11 +62,11 @@ module Game
 
       #PlayerがRubyを取得
       @deleting_objs = []
-      #@space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
-      #  @deleting_objs << b.parent_obj
-      #  sound.play
-      #  @score += 100
-      #end
+      @space.add_collision_handler(Enemy::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
+        @deleting_objs << a.parent_obj
+        sound.play
+        @score += 100
+      end
 
       @add_objs = []
 
