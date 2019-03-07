@@ -5,8 +5,10 @@ class Dlang < Enemy
     end
 
     def move
-      puts 'here is move method'
-      
-      apply_force(50, 0)
+        if rand(100) % 3 == 0 
+          apply_force(rand(-10..10), -50)
+        else
+          apply_force(rand(-10..10), 10)
+        end
     end
 end
