@@ -17,9 +17,11 @@ module Game
 
       @add_objs = []
       @add_items = []
-      @walls = []
+
       @deleting_objs = []
       @objects = []
+
+      @wall = Walls.new
 
       itemFlg = true
 
@@ -109,8 +111,8 @@ module Game
         player.game_end
       end
 
-      create_walls
-    end
+    #   create_walls
+    # end
 
     def play
         #BGMを再生する
@@ -120,14 +122,14 @@ module Game
         end
         Window.draw(0, 0, @bg_img)
 
+        #wallsの表示
+        @wall.create_walls
+        @wall.draw
+
         #削除予定のオブジェクトを削除
         @deleting_objs.each do | obj |
           @space.remove(obj)
           @objects.delete(obj)
-        end
-
-        @walls.each do | wall |
-          wall.draw
         end
 
         @add_items.each do | obj2 |
@@ -152,26 +154,12 @@ module Game
         end
     end
 
-
     private
       def scene_transition
         Scene.move_to(:ending)
       end
 
-      def create_walls
-        @walls << CPStaticBox.new(0, 600, 900, 650)
 
-        @walls << CPStaticBox.new(180, 480, 360, 500)
-        @walls << CPStaticBox.new(540, 480, 720, 500)
-        @walls << CPStaticBox.new(300, 200, 540, 220)
-        @walls << CPStaticBox.new(100, 350, 240, 370)
-        @walls << CPStaticBox.new(700, 350, 870, 370)
-        @walls << CPStaticBox.new(300, 320, 600, 340)
-
-        @walls.each do |wall|
-          @space.add(wall)
-        end
-      end
 
       def disp_timer
         @now_time = Time.now
@@ -195,5 +183,6 @@ module Game
     #   @space.add(enemy)
     #   @objects << enemy
     # end
+end
 end
 end
