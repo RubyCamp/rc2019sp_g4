@@ -56,7 +56,7 @@ module Game
 
       #Ruby生成
       3.times do
-        r=Ruby.new(rand(800),rand(400),30,30)
+        r=Ruby.new(rand(550)+200,rand(350)+50,30,30)
         @space.add(r)
         @objects << r
       end
@@ -97,6 +97,7 @@ module Game
       #PlayerがRubyを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
+        getName=@item.item_name
       end        
 
       @space.gravity = CP::Vec2.new(0, 1000)
@@ -128,7 +129,6 @@ module Game
         @i=1
         end
 
-
         Window.draw(0, 0, @bg_img)
 
         #削除予定のオブジェクトを削除
@@ -143,9 +143,9 @@ module Game
 
 
         @add_objs.each do |obj2|
-          item=Item.new(430,440,30,30,1)
-          @space.add(item)
-          @objects << item
+          @item=Item.new(460,440,30,30,1)
+          @space.add(@item)
+          @objects << @item
           @add_objs.delete(obj2)
         end
 
