@@ -57,7 +57,11 @@ def move
     @haveItem << item
   end
 
-  def game_end
-    Scene.move_to(:ending)
+  def game_over
+    Scene.move_to(:gameover)
+  end
+
+  def game_clear
+    Scene.move_to(:gameclear)
   end
 end

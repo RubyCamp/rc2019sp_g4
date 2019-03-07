@@ -2,7 +2,7 @@ require 'dxruby'
 
 font = Font.new(32)
 
-limit_time = 3 * 60  # 分*60
+limit_time = 1 * 60  # 分*60
 start_time = Time.now
 
 Window.loop do

@@ -4,7 +4,8 @@ require 'chipmunk'
 require_relative 'scene'
 require_relative 'scenes/opening/director'
 require_relative 'scenes/game/director'
-require_relative 'scenes/ending/director'
+require_relative 'scenes/gameover/director'
+require_relative 'scenes/gameclear/director'
 
 require_relative 'lib/cp'
 require_relative 'lib/cp/cp_base'
@@ -32,7 +33,8 @@ Window.height = 650
 
 Scene.add(Opening::Director.new, :opening)
 Scene.add(Game::Director.new, :game)
-Scene.add(Ending::Director.new, :ending)
+Scene.add(Gameover::Director.new, :gameover)
+Scene.add(Gameclear::Director.new, :gameclear)
 Scene.move_to :opening
 
 Window.loop do
