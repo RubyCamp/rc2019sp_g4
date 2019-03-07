@@ -5,14 +5,16 @@ module Game
       @font = Font.new(24)
       @score = 0
       @highscore = 100
+
       # タイマー表示
       @limit_time = 20  # 分*60
       @start_time = Time.now
+
       #BGM
-      @bgm = Sound.new("sound/bgm.WAV")
-      @bgm.play
       sound = Sound.new("sound/ruby.wav")  # sound.wav読み込み
-      # @bgm = Sound.new("bgm3.mp3")  # bgm.mid読み込み
+      @bgm = Sound.new("sound/bgm.WAV")
+      @i=0
+
 
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
@@ -115,6 +117,13 @@ module Game
       end
 
       def play
+        #BGMを再生する
+        if @i==0 then
+        @bgm.play
+        @i=1
+        end
+
+
         Window.draw(0, 0, @bg_img)
 
         @walls.each do |wall|
