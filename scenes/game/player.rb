@@ -16,7 +16,6 @@ class Player < CPCircle
     @jumpable = true
 
     @haveItem=[]
-
   end
 
   def move
@@ -75,7 +74,7 @@ class Player < CPCircle
     @body.p.x = 10 if @body.p.x < 5
     @body.p.y = 52 if @body.p.y < 0
     @body.p.y = 558 if @body.p.y > 558
-Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
+    Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
   end
 
   def haveItem
