@@ -94,10 +94,11 @@ module Game
         end
         true
       end
-      #PlayerがRubyを取得
+      #PlayerがItemを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
         getName=@item.item_name
+        p getName
       end        
 
       @space.gravity = CP::Vec2.new(0, 1000)
