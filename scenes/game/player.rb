@@ -53,4 +53,8 @@ class Player < CPCircle
   def get_item(item)
     @haveItem << item
   end
+
+  def game_end
+    Scene.move_to(:ending)
+  end
 end
