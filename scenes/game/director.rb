@@ -96,9 +96,9 @@ module Game
       @walls << CPStaticBox.new(180, 480, 360, 500)
       @walls << CPStaticBox.new(540, 480, 720, 500)
       @walls << CPStaticBox.new(300, 200, 540, 220)
-      @walls << CPStaticBox.new(100, 350, 240, 370)
+      @walls << CPStaticBox.new(100, 350, 220, 370)
       @walls << CPStaticBox.new(700, 350, 870, 370)
-      @walls << CPStaticBox.new(300, 320, 600, 340)
+      @walls << CPStaticBox.new(350, 320, 600, 340)
 
       #@space.add(@current)
       @walls.each do |wall|
