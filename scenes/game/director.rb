@@ -2,7 +2,7 @@ module Game
   class Director
     def initialize
       # スコア表示
-      @font = Font.new(24)
+      @font = Font.new(30)
       @score = 0
       @highscore = 100
 
@@ -14,7 +14,6 @@ module Game
       sound = Sound.new("sound/ruby.wav")  # sound.wav読み込み
       @bgm = Sound.new("sound/bgm.wav")
       @i = 0
-
 
       @box_x11 = rand(0 .. 450)
       @box_x12 = @box_x11 + 100
@@ -117,6 +116,7 @@ module Game
         player.get_item(@item.data)
       end
 
+      #Playerのジャンプ可能判定
       @space.add_collision_handler(Player::COLLISION_TYPE, CPStaticBox::COLLISION_TYPE) do |a, b, arb|
         player = a.parent_obj
         if player.body.v.y >= 0
@@ -174,7 +174,9 @@ module Game
         end
 
         # スコア表示
-        Window.draw_font(650, 40, "SCORE: #{@score}", @font)
+
+        Window.draw_font(740, 10, "SCORE: #{@score}", @font, color: C_BLACK)
+
 
         # タイマー表示
         disp_timer
@@ -216,7 +218,7 @@ module Game
         countdown = (@limit_time - @diff_time).to_i
         @min = countdown / 60
         @sec = countdown % 60
-        Window.drawFont(10, 10, "#{@min}:#{@sec}", @font)
+        Window.drawFont(10, 10, "#{@min}:#{@sec}", @font, color: C_BLACK)
 
         @space.step(1 / 60.0)
         if @min < 0

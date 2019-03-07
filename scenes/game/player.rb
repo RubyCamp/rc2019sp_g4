@@ -43,10 +43,10 @@ def move
   end
 
   def draw
-      @body.p.x = 0 if @body.p.x > 900
-      @body.p.x = 850 if @body.p.x < 0
+      @body.p.x = 850 if @body.p.x > 850
+      @body.p.x = 0 if @body.p.x < 0
       @body.p.y = 52 if @body.p.y < 0
-    Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
+      Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
   end
 
   def haveItem
