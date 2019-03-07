@@ -6,8 +6,13 @@ module Game
       @score = 0
       @highscore = 100
       # タイマー表示
-      @limit_time = 3 * 60  # 分*60
+      @limit_time = 20  # 分*60
       @start_time = Time.now
+      #BGM
+      @bgm = Sound.new("sound/bgm.WAV")
+      @bgm.play
+      sound = Sound.new("sound/ruby.wav")  # sound.wav読み込み
+      # @bgm = Sound.new("bgm3.mp3")  # bgm.mid読み込み
 
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 500) #重力500として作成
@@ -21,7 +26,6 @@ module Game
       # エネミーオブジェクトの生成
       # initialize(x, y, r, mass, image = nil, e = 0.8, u = 0.8)
       dlang = Dlang.new(-100, 200, 20, 1, 'images/dlang.png')
-
       elephpant = Elephpant.new(400, 500, 20, 1, 'images/elephpant.png')
       gopher = Gopher.new(400, 500, 20, 1, 'images/gopher.png')
       python = Python.new(500, 500, 20, 1, 'images/python.png')
@@ -47,11 +51,6 @@ module Game
       @space.gravity = CP::Vec2.new(0, 150)
 
 
-      # ゲーム世界に障害物となる静的BOXを追加
-      block = CPStaticBox.new(200, 350, 600, 400)
-      @space.add(block)
-
-      @objects << block
 
       #Ruby生成
       3.times do
@@ -75,7 +74,8 @@ module Game
       #PlayerがRubyを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Ruby_::COLLISION_TYPE) do |a, b, arb|
         # DXrubyを削除
-        b.dispose
+        sound.play
+        # b.dispose
         # CPを削除
         @space.remove(b)
       end
@@ -87,18 +87,19 @@ module Game
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
         pos = arb.points.first.point
         # 衝突個所の反対座標にItemを生成
+
         if itemFlg==true
           @add_objs << pos
           itemFlg=false
         end
         true
       end
-
       #PlayerがRubyを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deletiing_obj << b.parent_obj
       end
 
+      # ゲーム世界に障害物となる静的BOXを追加
       @space.gravity = CP::Vec2.new(0, 500)
 
       @walls = []
@@ -147,11 +148,21 @@ module Game
         @now_time = Time.now
         @diff_time = @now_time - @start_time
         countdown = (@limit_time - @diff_time).to_i
-        min = countdown / 60
-        sec = countdown % 60
-        Window.drawFont(10, 10, "#{min}:#{sec}", @font)
+        @min = countdown / 60
+        @sec = countdown % 60
+        Window.drawFont(10, 10, "#{@min}:#{@sec}", @font)
+
+        #bgm
+        if Input.key_push?(K_Z) then  # Zキーで再生
+        end
 
         @space.step(1 / 60.0)
+        scene_transition if @min < 0
       end
+
+      def scene_transition
+        Scene.move_to(:ending)
+      end
+
    end
 end

@@ -13,7 +13,7 @@ class Player < CPCircle
     super(x,y,r,mass,@current_image,e,u)
   end
 
-  def move
+ def move
     @current_image = @images[:right] if Input.key_push?(K_RIGHT)
     @current_image = @images[:left] if Input.key_push?(K_LEFT)
     @current_image = @images[:jump] if Input.key_push?(K_DOWN)
@@ -30,5 +30,4 @@ class Player < CPCircle
   def draw
     Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
   end
-
 end
