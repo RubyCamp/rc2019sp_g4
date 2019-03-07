@@ -32,7 +32,6 @@ class Player < CPCircle
       @current_image = @images[:jump]
     end
     if @haveItem == ["beer", true, 0, 1]
-      puts "qqq"
       apply_force(50, 0) if Input.key_down?(K_LEFT)
       apply_force(-50, 0) if Input.key_down?(K_RIGHT)
       apply_force(0, 100) if Input.key_down?(K_UP)
@@ -42,9 +41,17 @@ class Player < CPCircle
         @jumpable = false
       end
     elsif @haveItem == ["apple", false, 0, 3]
-      puts "ddd"
       apply_force(300, 0) if Input.key_down?(K_RIGHT)
       apply_force(-300, 0) if Input.key_down?(K_LEFT)
+      apply_force(0, 100) if Input.key_down?(K_DOWN)
+      if Input.key_push?(K_UP) && @jumpable
+        apply_force(0, -4500)
+        @current_image = @images[:jump]
+        @jumpable = false
+      end
+    elsif @haveItem == ["choco", true, 0, 1]
+      apply_force(50, 0) if Input.key_down?(K_RIGHT)
+      apply_force(-50, 0) if Input.key_down?(K_LEFT)
       apply_force(0, 100) if Input.key_down?(K_DOWN)
       if Input.key_push?(K_UP) && @jumpable
         apply_force(0, -7000)
@@ -64,10 +71,11 @@ class Player < CPCircle
   end
 
   def draw
-      @body.p.x = 850 if @body.p.x > 850
-      @body.p.x = 0 if @body.p.x < 0
-      @body.p.y = 52 if @body.p.y < 0
-      Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
+    @body.p.x = 850 if @body.p.x > 850
+    @body.p.x = 10 if @body.p.x < 5
+    @body.p.y = 52 if @body.p.y < 0
+    @body.p.y = 558 if @body.p.y > 558
+Window.draw(@body.p.x - @r, @body.p.y - @r, @current_image )
   end
 
   def haveItem
