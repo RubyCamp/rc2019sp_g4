@@ -22,29 +22,29 @@ module Game
       @objects = []
       # オブジェクトがウィンドウの範囲を出ないよう、範囲のすぐ外側の4方向に固定の壁を設置
       CPBase.generate_walls(@space)
-      # プレイヤーオブジェクト（円オブジェクト）作成
+      # プレイヤーオブジェクト（円オブジェクト）作成`
       #player = Player.new(21, 300, 20, 1, C_BLUE)
 
       # エネミーオブジェクトの生成
-      dlang = Dlang.new(-100, 200, 20, 1, 'images/dlang.png')
-      elephpant = Elephpant.new(400, 500, 20, 1, 'images/elephpant.png')
-      gopher = Gopher.new(400, 500, 20, 1, 'images/gopher.png')
-      python = Python.new(500, 500, 20, 1, 'images/python.png')
+      @dlang = Dlang.new(rand(200), rand(200), 40, 1, 'images/dlang.png')
+      @elephpant = Elephpant.new(rand(800), rand(500), 40, 1, 'images/elephpant.png')
+      @gopher = Gopher.new(rand(200), rand(500), 40, 1, 'images/gopher.png')
+      @python = Python.new(rand(500), rand(200), 40, 1, 'images/python.png')
 
-      enemies = []
-      enemies << dlang
-      enemies << elephpant
-      enemies << gopher
-      enemies << python
+      @enemies = []
+      @enemies << @dlang
+      @enemies << @elephpant
+      @enemies << @gopher
+      @enemies << @python
 
-      enemies.each do |enemy|
-        @space.add(enemy)
+      @enemies.each do |enemy|
+       @space.add(enemy)
       end
 
-      enemies.map do |enemy|
+      @enemies.map do |enemy|
         @objects << enemy
       end
-
+      
       # ゲーム世界に障害物となる静的BOXを追加
       @bg_img = Image.load('images/back_bg.png')
 
@@ -113,9 +113,9 @@ module Game
       player = Player.new(400, 500, 45, 10, 0, 1)
       @space.add(player)
       @objects << player
-
-
-      def play
+    end
+      
+    def play
         #BGMを再生する
         if @i==0 then
           @bgm.play
@@ -149,7 +149,6 @@ module Game
           end
         end
 
-
         # ゲーム空間に配置された全てのオブジェクトに対して同じ処理を実施して回る
         @objects.each do |obj|
           obj.move  # 1フレーム分の移動処理
@@ -170,10 +169,25 @@ module Game
 
         @space.step(1 / 60.0)
         scene_transition if @min < 0 end
-      end
 
-      def scene_transition
-        Scene.move_to(:ending)
+        
+        #if @diff_time == 9.41216
+        # enemy_register
+        #end  
+    end
+
+    def scene_transition
+      Scene.move_to(:ending)
+    end
+
+=begin
+    def enemy_register
+      if @enemies.length == 0
+        return
       end
-   end
+      enemy = @enemies.shift
+      @space.add(enemy)
+      @objects << enemy
+    end
+=end
 end

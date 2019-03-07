@@ -5,6 +5,7 @@ class Python < Enemy
     end
 
     def move
-      @body.v = CP::Vec2.new(300, 0)
+      apply_force(-5, 0)
+      #@body.v = CP::Vec2.new(300, 0)
     end
 end

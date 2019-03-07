@@ -6,7 +6,7 @@ class Gopher < Enemy
     end
 
     def move
-      apply_force(100, 0)
+      apply_force(10, 0)
       #@body.v = CP::Vec2.new(400, 0)
     end
 end

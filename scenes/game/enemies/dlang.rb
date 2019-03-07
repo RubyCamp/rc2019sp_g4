@@ -5,8 +5,7 @@ class Dlang < Enemy
     end
 
     def move
-      puts 'here is move method'
-      
-      apply_force(50, 0)
+      apply_force(10, 0)
+      #@body.v = CP::Vec2.new(300, 0)
     end
 end
