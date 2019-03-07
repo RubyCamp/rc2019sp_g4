@@ -6,14 +6,6 @@ module Opening
       @font1 = Font.new(50)
       @font2 = Font.new(100)
       @space = CP::Space.new
-      # @space.gravity = CP::Vec2.new(0, 150)
-      # @circle = CPCircle.new(100, 100, 20, 1, C_BLUE, 1.0, 1.0)
-      # @circle.apply_force(200, 0)
-      # @walls = CPBase.walls
-      # @space.add(@circle)
-      # @walls.each do |wall|
-      #   @space.add(wall)
-      # end
     end
 
     def play
