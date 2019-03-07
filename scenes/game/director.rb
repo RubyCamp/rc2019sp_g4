@@ -17,7 +17,7 @@ module Game
 
       @space = CP::Space.new
       @space.gravity = CP::Vec2.new(0, 1000) #重力500として作成
-      
+
       #オブジェクトの配列
       @objects = []
       # オブジェクトがウィンドウの範囲を出ないよう、範囲のすぐ外側の4方向に固定の壁を設置
@@ -55,8 +55,9 @@ module Game
         @objects << r
       end
 
-      #itembox生成 staticが生成できない
-      itembox = ItemBox.new(350,20,400,70)
+      #itembox生成 
+      itembox = ItemBox.new(350, 20, 400, 70)
+
       @space.add(itembox)
       @objects << itembox
 
@@ -65,18 +66,22 @@ module Game
       @space.add_collision_handler(Player::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
         sound.play
+        @score += 100
       end
 
-      @add_objs=[]
+      @add_objs = []
+
+      @add_items = []
+
       itemFlg=true
-      
+
       #PlayerがItemBoxをタッチ
       @space.add_collision_handler(Player::COLLISION_TYPE, ItemBox::COLLISION_TYPE) do |a, b, arb|
         # 衝突個所（arb.points配列）から、先頭の1つを取得（複数個所ぶつかるケースもあり得るため配列になっている）
         pos = arb.points.first.point
-        # 衝突個所の反対座標にItemを生成
+        # 追加アイテム配列に追加
         if itemFlg == true
-          @add_objs << pos
+          @add_items << pos
           itemFlg = false
         end
         true
@@ -85,9 +90,10 @@ module Game
       #PlayerがItemを取得
       @space.add_collision_handler(Player::COLLISION_TYPE, Item::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << b.parent_obj
-        getName = @item.item_name
+        player = a.parent_obj
+        player.get_item(@item.data)  
       end        
-      
+
       @space.gravity = CP::Vec2.new(0, 1000)
 
       @walls = []
@@ -108,7 +114,7 @@ module Game
       player = Player.new(400, 500, 45, 10, 0, 1)
       @space.add(player)
       @objects << player
-      
+
 
       def play
         #BGMを再生する
@@ -129,11 +135,13 @@ module Game
           wall.draw
         end
 
-        @add_objs.each do |obj2|
-          @item=Item.new(345,20,30,30,1)
+        @add_items.each do |obj2|
+          class_Name=[Beer, Apple, Choco]
+          @item = class_Name.sample.new(345,20,30,30,1)
+
           @space.add(@item)
           @objects << @item
-          @add_objs.delete(obj2)
+          @add_items.delete(obj2)
         end
 
         @space.add_collision_handler(Player::COLLISION_TYPE, CPStaticBox::COLLISION_TYPE) do |a, b, arb|
