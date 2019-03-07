@@ -10,8 +10,8 @@ module Opening
 
     def play
       Window.draw(0, 0, @bg_img)
-      Window.draw_font(60, 30, 'プログラミングの森', @font2, color: C_GREEN)
-      Window.draw_font(200, 550, 'Push Space key to start', @font1, color: C_YELLOW)
+      Window.draw_font(190, 295, 'Rubyショット ', @font2, color: C_BLACK)
+      Window.draw_font(200, 590, 'Push Space key to start', @font1, color: C_BLACK)
       @space.step(1 / 60.0)
       # @circle.draw
       # @walls.each(&:draw)
