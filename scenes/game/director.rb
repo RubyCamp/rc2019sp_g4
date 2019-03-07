@@ -3,7 +3,7 @@ module Game
     def initialize
       # スコア表示
       @font = Font.new(30)
-      @score = 0
+      @@score = 0
       @highscore = 100
 
       # タイマー表示
@@ -94,7 +94,7 @@ module Game
       @space.add_collision_handler(Enemy::COLLISION_TYPE, Ruby::COLLISION_TYPE) do |a, b, arb|
         @deleting_objs << a.parent_obj
         sound.play
-        @score += 100
+        @@score += 100
       end
 
       # PlayerがItemBoxに触れる
@@ -143,11 +143,11 @@ module Game
         Window.draw(0, 0, @bg_img)
 
         # ゲームクリアか判断する
-      enemies_Defeated_Num = @deleting_objs.count
-      if enemies_Defeated_Num == 4
-        enemies_Defeated_Num = 0
-        Scene.move_to(:gameclear)
-      end
+        enemies_Defeated_Num = @deleting_objs.count
+        if enemies_Defeated_Num == 4
+          enemies_Defeated_Num = 0
+          Scene.move_to(:gameclear)
+        end
 
         # 削除予定のアイテムを削除
         @deleting_items.each do | obj |
@@ -186,6 +186,10 @@ module Game
           obj.move  # 1フレーム分の移動処理
           obj.draw  # 1フレーム分の描画処理
         end
+    end
+
+    def self.get_score
+      @@score
     end
 
     private
